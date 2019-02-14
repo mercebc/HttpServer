@@ -14,7 +14,7 @@ public class CommunicatorTest {
 
     @Before
     public void Setup(){
-        socket = new SocketStub(new ByteArrayInputStream("hello".getBytes()), new ByteArrayOutputStream());
+        socket = new SocketStub(new ByteArrayInputStream("hello I am".getBytes()), new ByteArrayOutputStream());
         ss = new StreamSocket(socket.getInputStream(), socket.getOutputStream());
         com = new Communicator(ss);
     }
@@ -22,6 +22,6 @@ public class CommunicatorTest {
     @Test
      public void ReceivesARequestString() throws IOException {
         com.run();
-        assertThat(com.getRequestString(), is("hello"));
+        assertThat(com.getRequestString(), is("hello I am"));
     }
 }

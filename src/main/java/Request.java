@@ -12,4 +12,12 @@ public class Request {
     public String getVerb() {
         return verb;
     }
+
+    public String getURI() {
+        return URI;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
 }

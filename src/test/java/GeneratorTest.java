@@ -15,5 +15,19 @@ public class GeneratorTest {
         assertThat(response.getCode(), is(200));
     }
 
+    @Test
+    public void simpleHead(){
+        request = new Request("HEAD", "/simple_get", protocol);
+        Response response = generator.generateResponse(request);
+        assertThat(response.getCode(), is(200));
+    }
+
+    @Test
+    public void notFound(){
+        request = new Request("GET", "/not_found_resource", protocol);
+        Response response = generator.generateResponse(request);
+        assertThat(response.getCode(), is(404));
+    }
+
 
 }

@@ -1,23 +1,31 @@
-public class Request {
-    private String verb;
-    private String URI;
-    private String protocol;
+import java.util.HashMap;
 
-    public Request(String verb, String URI, String protocol){
-        this.verb = verb;
-        this.URI = URI;
-        this.protocol = protocol;
+public class Request {
+
+    private String[] request_line;
+    private HashMap<String, String> headers;
+    private String message_body;
+
+
+    public Request(String verb, String URI, String protocol) {
+
+        this.request_line = new String[3];
+
+        this.request_line[0] = verb;
+        this.request_line[1] = URI;
+        this.request_line[2] = protocol;
+
     }
 
     public String getVerb() {
-        return verb;
+        return request_line[0];
     }
 
     public String getURI() {
-        return URI;
+        return request_line[1];
     }
 
     public String getProtocol() {
-        return protocol;
+        return request_line[2];
     }
 }

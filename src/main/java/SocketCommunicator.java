@@ -26,7 +26,6 @@ public class SocketCommunicator {
             request.write((byte) result);
         } while (inputStream.available() > 0);
 
-        // StandardCharsets.UTF_8.name() > JDK 7
         return request.toString("UTF-8");
     }
 

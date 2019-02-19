@@ -10,7 +10,7 @@ public class Server {
     public void start() throws IOException {
         while (true) {
             SocketCommunicator socketCommunicator = serverListener.connect();
-            new ServerCommunicator(socketCommunicator).run();
+            new ServerCommunicator(socketCommunicator).handleRequest();
         }
     }
 }

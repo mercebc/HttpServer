@@ -18,7 +18,7 @@ public class ServerCommunicator {
         return requestString;
     }
 
-    public void run() throws IOException {
+    public void handleRequest() throws IOException {
         Request request = getRequest();
         Response response = generator.generateResponse(request);
         sendResponse(response);
@@ -26,13 +26,8 @@ public class ServerCommunicator {
         socketCommunicator.closeConnection();
     }
 
-    private String receive() throws IOException {
-        return socketCommunicator.readFromSocket();
-    }
-
     private Request getRequest() throws IOException {
-        requestString = receive();
-        System.out.println(requestString);
+        requestString = socketCommunicator.readFromSocket();
         return requestConverter.stringToRequest(requestString);
     }
 

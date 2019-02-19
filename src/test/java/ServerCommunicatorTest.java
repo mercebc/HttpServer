@@ -1,3 +1,4 @@
+import Stubs.SocketStub;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class ServerCommunicatorTest {
 
     @Test
      public void ReceivesARequestString() throws IOException {
-        com.run();
+        com.handleRequest();
         assertThat(com.getRequestString(), is("hello world http"));
     }
 }

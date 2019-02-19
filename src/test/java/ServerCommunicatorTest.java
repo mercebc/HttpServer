@@ -15,7 +15,7 @@ public class ServerCommunicatorTest {
 
     @Before
     public void Setup(){
-        socket = new SocketStub(new ByteArrayInputStream("hello world http".getBytes()), new ByteArrayOutputStream());
+        socket = new SocketStub(new ByteArrayInputStream("GET /simple_get HTTP/1.1".getBytes()), new ByteArrayOutputStream());
         ss = new SocketCommunicator(socket);
         com = new ServerCommunicator(ss);
     }
@@ -23,6 +23,6 @@ public class ServerCommunicatorTest {
     @Test
      public void ReceivesARequestString() throws IOException {
         com.handleRequest();
-        assertThat(com.getRequestString(), is("hello world http"));
+        assertThat(com.getRequestString(), is("GET /simple_get http"));
     }
 }

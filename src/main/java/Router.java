@@ -1,7 +1,4 @@
-import Handlers.NotFoundHandler;
-import Handlers.Response;
-import Handlers.ResponseHandler;
-import Handlers.SimpleGetHandler;
+import Handlers.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +31,7 @@ public class Router {
         addResource(new Resource("GET", "/simple_get"), new SimpleGetHandler());
         addResource(new Resource("HEAD", "/simple_get"), new SimpleGetHandler());
         addResource(new Resource("HEAD", "/get_with_body"), new SimpleGetHandler());
-
+        addResource(new Resource("GET", "/redirect"), new RedirectHandler());
     }
 }
 

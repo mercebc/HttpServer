@@ -3,13 +3,12 @@ package Handlers;
 import java.util.HashMap;
 
 public class Response {
-    private HashMap<String, String> headers;
-    private String body;
+    private HashMap<String, String> headers = new HashMap<>();
+    private String body = "";
     private String statusLine;
 
     public Response(String statusLine){
         this.statusLine = statusLine;
-        this.body = ""; //empty body
     }
 
     public Response(String statusLine, String body) {

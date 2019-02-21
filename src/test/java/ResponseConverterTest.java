@@ -6,7 +6,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class OldResponseConverterTest {
+public class ResponseConverterTest {
     private ResponseConverter responseConverter;
     private Response response;
 
@@ -18,7 +18,7 @@ public class OldResponseConverterTest {
 
     @Test
     public void translatesTheResponseIntoString(){
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\nHello world!"));
+        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\nHello world!"));
     }
 
 

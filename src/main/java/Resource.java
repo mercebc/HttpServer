@@ -1,10 +1,10 @@
 import java.util.Objects;
 
-public class Route {
+public class Resource {
     private String method;
     private String URI;
 
-    public Route(String method, String URI) {
+    public Resource(String method, String URI) {
         this.method = method;
         this.URI = URI;
     }
@@ -29,12 +29,12 @@ public class Route {
     public boolean equals(Object r) {
 
         if (r == this) return true;
-        if (!(r instanceof Route)) {
+        if (!(r instanceof Resource)) {
             return false;
         }
-        Route route = (Route) r;
-        return Objects.equals(URI, route.URI) &&
-                Objects.equals(method, route.method);
+        Resource resource = (Resource) r;
+        return Objects.equals(URI, resource.URI) &&
+                Objects.equals(method, resource.method);
     }
 
     @Override

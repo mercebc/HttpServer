@@ -3,13 +3,13 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
-public class RouteTest {
+public class ResourceTest {
 
     @Test
     public void twoRoutesAreEqual(){
-        Route route = new Route("GET", "/example");
-        Route secondRoute = new Route("GET", "/example");
-        assertThat(route.equals(secondRoute), is(true));
+        Resource resource = new Resource("GET", "/example");
+        Resource secondResource = new Resource("GET", "/example");
+        assertThat(resource.equals(secondResource), is(true));
     }
 
 }

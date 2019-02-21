@@ -1,11 +1,11 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 
-public class ServerListener {
+public class Listener {
 
     private ServerSocket serverSocket;
 
-    public ServerListener(ServerSocket serverSocket) {
+    public Listener(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
     }
 

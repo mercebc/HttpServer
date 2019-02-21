@@ -17,7 +17,7 @@ public class RequestConverterTest {
     @Test
     public void getsTheVerbOfARequest() {
         Request request = requestConverter.stringToRequest(requestString);
-        assertThat(request.getVerb(), is("GET"));
+        assertThat(request.getMethod(), is("GET"));
     }
 
     @Test

@@ -17,9 +17,7 @@ public class Request {
 
     }
 
-    public String getVerb() {
-        return request_line[0];
-    }
+    public String getMethod(){ return request_line[0]; }
 
     public String getURI() {
         return request_line[1];

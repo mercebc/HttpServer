@@ -10,7 +10,7 @@ import java.io.PrintStream;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SocketServerCommunicatorTest {
+public class SocketCommunicatorTest {
 
     private SocketHelper socketHelper;
     private PrintStream output;

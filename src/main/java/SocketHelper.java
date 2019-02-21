@@ -1,11 +1,11 @@
 import java.io.*;
 import java.net.Socket;
 
-public class SocketCommunicator {
+public class SocketHelper {
     private Socket socket;
     private boolean messageSent = false;
 
-    public SocketCommunicator(Socket socket) {
+    public SocketHelper(Socket socket) {
         this.socket = socket;
     }
 

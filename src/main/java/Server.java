@@ -1,19 +1,22 @@
+import Handlers.Response;
+
 import java.io.IOException;
 
 public class Server {
-    private ServerListener serverListener;
+    private Listener listener;
     private Router router;
 
-    public Server(ServerListener serverListener){
-        this.serverListener = serverListener;
-        this.router = new Router();
+    public Server(Listener listener, Router router){
+        this.listener = listener;
+        this.router = router;
     }
 
     public void start() throws IOException {
         while (true) {
-            ServerCommunicator serverCommunicator = new ServerCommunicator(serverListener.connect());
-            Response response = router.route(serverCommunicator.getRequest());
-            serverCommunicator.sendResponse(response);
+            Communicator communicator = new Communicator(listener.connect());
+            Response response = router.route(communicator.getRequest());
+            communicator.sendResponse(response);
         }
     }
+
 }

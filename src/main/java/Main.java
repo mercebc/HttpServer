@@ -5,7 +5,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         int portNumber = 5000;
-        new Server(new ServerListener(new ServerSocket(portNumber))).start();
+        Listener listener = new Listener(new ServerSocket(portNumber));
+
+        Router router = new Router();
+        router.config();
+
+        Server server = new Server(listener, router);
+        server.start();
 
     }
 }

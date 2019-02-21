@@ -1,3 +1,5 @@
+package Handlers;
+
 public class NotFoundHandler implements ResponseHandler {
     @Override
     public Response respondToRequest() {

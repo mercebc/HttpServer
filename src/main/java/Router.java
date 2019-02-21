@@ -1,29 +1,41 @@
+import Handlers.NotFoundHandler;
+import Handlers.Response;
+import Handlers.ResponseHandler;
+import Handlers.SimpleGetHandler;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Router {
 
-    private Map<Route, Handler> routes = new HashMap<>();
+    private Map<Resource, ResponseHandler> routes = new HashMap<>();
 
-    public void addRoute(Route route, Handler handler){
-        routes.put(route, handler);
+    public void addResource(Resource resource, ResponseHandler responseHandler){
+        routes.put(resource, responseHandler);
+    }
+
+    public Map<Resource, ResponseHandler> getRoutes() {
+        return routes;
     }
 
     public Response route(Request request){
 
-        Route route = new Route(request.getVerb(), request.getURI());
+        Resource resource = new Resource(request.getMethod(), request.getURI());
 
-        addRoute(new Route("GET", "/simple_get"), new OKResponseHandler());
-
-        System.out.println(route.getMethod());
-        if (routes.get(route) != null) {
-            return routes.get(route).respondToRequest();
+        if (routes.get(resource) != null) {
+            return routes.get(resource).respondToRequest();
+        }else{
+            return new NotFoundHandler().respondToRequest();
         }
-
-        return null;
 
     }
 
+    public void config(){
+        addResource(new Resource("GET", "/simple_get"), new SimpleGetHandler());
+        addResource(new Resource("HEAD", "/simple_get"), new SimpleGetHandler());
+        addResource(new Resource("HEAD", "/get_with_body"), new SimpleGetHandler());
+
+    }
 }
 
 

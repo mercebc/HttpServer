@@ -1,4 +1,4 @@
-import Responses.OldResponse;
+import Handlers.Response;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -11,9 +11,18 @@ public class RouterTest {
 
     @Test
     public void simpleGet(){
+        router.config();
+
         request = new Request("GET", "/simple_get", protocol);
         Response response = router.route(request);
-        assertThat(response.getHeaders(), is("HTTP/1.1 200 OK"));
+        assertThat(response.getStatusLine(), is("HTTP/1.1 200 OK"));
     }
+
+    @Test
+    public void configuresTheRouter(){
+        router.config();
+        assertThat(router.getRoutes().isEmpty(), is(false));
+    }
+
 
 }

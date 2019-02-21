@@ -1,4 +1,4 @@
-public interface Handler {
+public interface ResponseHandler {
 
     Response respondToRequest();
 

@@ -10,19 +10,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ServerCommunicatorTest {
     private SocketStub socket;
-    private SocketCommunicator ss;
+    private SocketHelper ss;
     private ServerCommunicator com;
 
     @Before
     public void Setup(){
         socket = new SocketStub(new ByteArrayInputStream("GET /simple_get HTTP/1.1".getBytes()), new ByteArrayOutputStream());
-        ss = new SocketCommunicator(socket);
+        ss = new SocketHelper(socket);
         com = new ServerCommunicator(ss);
     }
 
     @Test
      public void ReceivesARequestString() throws IOException {
         com.handleRequest();
-        assertThat(com.getRequestString(), is("GET /simple_get http"));
+        assertThat(com.getRequestString(), is("GET /simple_get HTTP/1.1"));
     }
 }

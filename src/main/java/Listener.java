@@ -9,8 +9,8 @@ public class ServerListener {
         this.serverSocket = serverSocket;
     }
 
-    public SocketCommunicator connect() throws IOException {
-        return new SocketCommunicator(serverSocket.accept());
+    public SocketHelper connect() throws IOException {
+        return new SocketHelper(serverSocket.accept());
     }
 
 }

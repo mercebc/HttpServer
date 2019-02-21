@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Route {
     private String method;
     private String URI;
@@ -22,4 +24,22 @@ public class Route {
     public void setURI(String URI) {
         this.URI = URI;
     }
+
+    @Override
+    public boolean equals(Object r) {
+
+        if (r == this) return true;
+        if (!(r instanceof Route)) {
+            return false;
+        }
+        Route route = (Route) r;
+        return Objects.equals(URI, route.URI) &&
+                Objects.equals(method, route.method);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(URI, method);
+    }
+
 }

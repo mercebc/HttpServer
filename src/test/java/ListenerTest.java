@@ -25,7 +25,7 @@ public class ServerListenerTest {
 
     @Test
     public void createsAStreamSocket() throws IOException {
-        assertThat(serverListener.connect(), is(SocketCommunicator.class));
+        assertThat(serverListener.connect(), is(SocketHelper.class));
     }
 
     @Test

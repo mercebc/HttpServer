@@ -1,4 +1,4 @@
-import Responses.OKOldResponse;
+import Handlers.Response;
 import org.junit.Before;
 import org.junit.Test;
 

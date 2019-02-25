@@ -1,3 +1,4 @@
+import Handlers.Request;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,35 +35,28 @@ public class RequestConverterTest {
 
     @Test
     public void convertsIntoRequestWithHeadersAndBody(){
-        requestString = "GET /simple_request HTTP/1.1\nexample: header\n\nsome body";
+        requestString = "GET /simple_request HTTP/1.1\r\nexample: header\r\n\r\nsome body";
         Request request = requestConverter.stringToRequest(requestString);
         assertThat(request.getMessageBody(), is("some body"));
     }
 
     @Test
     public void convertsIntoRequestWithOneHeader(){
-        requestString = "GET /simple_request HTTP/1.1\nexample: header\n\n";
+        requestString = "GET /simple_request HTTP/1.1\r\nexample: header\r\n\r\n";
         Request request = requestConverter.stringToRequest(requestString);
         assertThat(request.getHeaders().get("example"), is("header"));
     }
 
     @Test
     public void convertsIntoRequestWithMultipleHeaders(){
-        requestString = "GET /simple_request HTTP/1.1\nexample: header\nsecond: myHeader\n\nsome body";
-        Request request = requestConverter.stringToRequest(requestString);
-        assertThat(request.getHeaders().get("second"), is("myHeader"));
-    }
-
-    @Test
-    public void example(){
-        requestString = "GET /redirect HTTP/1.1\n" +
-                "Accept-Encoding: gzip;q=1.0,deflate;q=0.6,identity;q=0.3\n" +
-                "Accept: */*\n" +
-                "User-Agent: Ruby\n" +
-                "Connection: close\n" +
-                "Host: 0.0.0.0:5000\n" +
-                "\n" +
-                "\n";
+        requestString = "GET /redirect HTTP/1.1\r\n" +
+                "Accept-Encoding: gzip;q=1.0,deflate;q=0.6,identity;q=0.3\r\n" +
+                "Accept: */*\r\n" +
+                "User-Agent: Ruby\r\n" +
+                "Connection: close\r\n" +
+                "Host: 0.0.0.0:5000\r\n" +
+                "\r\n" +
+                "\r\n";
 
         Request request = requestConverter.stringToRequest(requestString);
         assertThat(request.getHeaders().get("Host"), is("0.0.0.0:5000"));

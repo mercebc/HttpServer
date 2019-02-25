@@ -1,6 +1,8 @@
+import Handlers.Request;
 import Handlers.Response;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -12,7 +14,7 @@ public class RouterTest {
     private Router router = new Router();
 
     @Test
-    public void simpleGet(){
+    public void simpleGet() throws InvocationTargetException, IllegalAccessException {
         router.config();
 
         request = new Request("GET", "/simple_get", protocol, new HashMap<>(), "");
@@ -21,7 +23,7 @@ public class RouterTest {
     }
 
     @Test
-    public void notFound(){
+    public void notFound() throws InvocationTargetException, IllegalAccessException {
         router.config();
 
         request = new Request("GET", "/simple_not_get", protocol, new HashMap<>(), "");
@@ -33,7 +35,7 @@ public class RouterTest {
     @Test
     public void configuresTheRouter(){
         router.config();
-        assertThat(router.getRoutes().isEmpty(), is(false));
+        assertThat(router.getResources().isEmpty(), is(false));
     }
 
 

@@ -1,3 +1,4 @@
+import Handlers.Request;
 import Handlers.Response;
 
 import java.io.IOException;

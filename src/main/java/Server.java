@@ -1,6 +1,7 @@
 import Handlers.Response;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class Server {
     private Listener listener;
@@ -11,7 +12,7 @@ public class Server {
         this.router = router;
     }
 
-    public void start() throws IOException {
+    public void start() throws IOException, InvocationTargetException, IllegalAccessException {
         while (true) {
             Communicator communicator = new Communicator(listener.connect());
             Response response = router.route(communicator.getRequest());

@@ -1,3 +1,4 @@
+import Handlers.Request;
 import Handlers.Response;
 import Stubs.SocketStub;
 import org.junit.Before;

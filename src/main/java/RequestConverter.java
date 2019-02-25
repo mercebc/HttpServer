@@ -1,3 +1,5 @@
+import Handlers.Request;
+
 import java.util.HashMap;
 
 public class RequestConverter {

@@ -1,64 +1,42 @@
 import Handlers.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Router {
 
-    private Map<Resource, ResponseHandler> routes = new HashMap<>();
+    private Map<String, ResponseHandler> resources = new HashMap<>();
 
-    public void addResource(Resource resource, ResponseHandler responseHandler){
-        routes.put(resource, responseHandler);
+    public void addResource(String resource, ResponseHandler responseHandler){
+        resources.put(resource, responseHandler);
     }
 
-    public Map<Resource, ResponseHandler> getRoutes() {
-        return routes;
+    public Map<String, ResponseHandler> getResources() {
+        return resources;
     }
 
-    public Response route(Request request){
+    public Response route(Request request) throws InvocationTargetException, IllegalAccessException {
 
-        Resource resource = new Resource(request.getMethod(), request.getURI());
+        String URI = request.getURI();
 
-
-        System.out.println(new MerceController().get());
-        System.out.println(new MerceController().post());
-
-        if (routes.get(resource) != null) {
-            return routes.get(resource).respondToRequest();
+        if (resources.get(URI) != null) {
+            return resources.get(URI).respondToRequest(request);
         }else{
             return new NotFoundHandler().respondToRequest();
         }
 
     }
 
-
     public void config(){
-        addResource(new Resource("GET", "/simple_get"), new SimpleGetHandler());
-        addResource(new Resource("HEAD", "/simple_get"), new SimpleGetHandler());
-        addResource(new Resource("HEAD", "/get_with_body"), new SimpleGetHandler());
-        addResource(new Resource("GET", "/redirect"), new RedirectHandler());
-        // addResource("/resource", new MerceController());
+        addResource("/simple_get", new SimpleGetHandler());
+        addResource("/redirect", new RedirectHandler());
+        addResource("/get_with_body", new GetWithBodyHandler());
+        addResource("/method_options", new MethodOptionsHandler());
+        addResource("/method_options2", new MethodOptions2Handler());
+        addResource("/echo_body", new EchoBodyHandler());
+
     }
 }
 
-abstract class Controller {
-
-    Response get() {
-        return new Response("405");
-    }
-
-    Response post() {
-        return new Response("405");
-    }
-
-}
-
-class MerceController extends Controller {
-
-    public Response get() {
-        return new Response("200");
-    }
-
-
-}
 

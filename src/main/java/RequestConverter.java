@@ -1,31 +1,47 @@
+import java.util.HashMap;
+
 public class RequestConverter {
-    private String space;
+    private static final String SPACE = "\\s+";
+    private static final String NEWLINE = "\r\n";
+    private static final String COLON = ": ";
 
-    public RequestConverter() {
-        this.space = "\\s+";
+    public Request stringToRequest(String request) {
+        String[] requestBlocs = request.split(NEWLINE);
+
+        String requestLine = requestBlocs[0];
+        HashMap<String, String> headers = convertHeaders(requestBlocs);
+        String body = convertBody(requestBlocs);
+
+        return createRequest(requestLine.split(SPACE), headers, body);
     }
 
-    //Request
+    private HashMap<String, String> convertHeaders(String[] requestBlocs) {
+        HashMap<String, String> headers = new HashMap<>();
 
-    //string to RequestLine
-
-    //create Request with RequestLine
-
-    //string to Headers
-
-    //add headers, if any, to Request
-
-    //string to message_body
-
-    //add message_body, if any, to Request
-
-
-    public Request stringToRequest(String requestLine){
-        return createRequest(requestLine.split(space));
+        for (int i = 1; i < requestBlocs.length; i++) {
+            if (!requestBlocs[i].isEmpty()) {
+                String[] header = requestBlocs[i].split(COLON);
+                headers.put(header[0].trim(), header[1].trim());
+            } else{
+                return headers;
+            }
+        }
+        return headers;
     }
 
 
-    public Request createRequest(String[] rq){
-        return new Request(rq[0], rq[1], rq[2]);
+    private String convertBody(String[] requestBlocs){
+        String body = "";
+        for (int i = 1; i < requestBlocs.length; i++) {
+            if(requestBlocs[i].isEmpty()){
+                body = requestBlocs[i + 1];
+            }
+        }
+        return body;
+    }
+
+
+    private Request createRequest(String[] requestLine, HashMap<String, String> headers, String body) {
+        return new Request(requestLine[0], requestLine[1], requestLine[2], headers, body);
     }
 }

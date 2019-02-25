@@ -19,6 +19,10 @@ public class Router {
 
         Resource resource = new Resource(request.getMethod(), request.getURI());
 
+
+        System.out.println(new MerceController().get());
+        System.out.println(new MerceController().post());
+
         if (routes.get(resource) != null) {
             return routes.get(resource).respondToRequest();
         }else{
@@ -27,12 +31,34 @@ public class Router {
 
     }
 
+
     public void config(){
         addResource(new Resource("GET", "/simple_get"), new SimpleGetHandler());
         addResource(new Resource("HEAD", "/simple_get"), new SimpleGetHandler());
         addResource(new Resource("HEAD", "/get_with_body"), new SimpleGetHandler());
         addResource(new Resource("GET", "/redirect"), new RedirectHandler());
+        // addResource("/resource", new MerceController());
     }
 }
 
+abstract class Controller {
+
+    Response get() {
+        return new Response("405");
+    }
+
+    Response post() {
+        return new Response("405");
+    }
+
+}
+
+class MerceController extends Controller {
+
+    public Response get() {
+        return new Response("200");
+    }
+
+
+}
 

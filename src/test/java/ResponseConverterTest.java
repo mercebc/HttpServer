@@ -15,11 +15,23 @@ public class ResponseConverterTest {
     @Before
     public void Setup(){
         responseConverter = new ResponseConverter();
-        response = new Response("HTTP/1.1 200 OK", "Hello world!");
     }
 
     @Test
-    public void convertsTheResponseIntoString(){
+    public void convertsResponseWithNoBodyIntoString(){
+        response = new Response("HTTP/1.1 200 OK");
+        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK"));
+    }
+
+    @Test
+    public void convertsResponseWithEmptyBodyIntoString(){
+        response = new Response("HTTP/1.1 200 OK", "");
+        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK"));
+    }
+
+    @Test
+    public void convertsResponseWithBodyIntoString(){
+        response = new Response("HTTP/1.1 200 OK", "Hello world!");
         assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\nHello world!"));
     }
 
@@ -28,8 +40,8 @@ public class ResponseConverterTest {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("first", "example");
         headers.put("second", "example2");
-        Response myResponse = new Response("HTTP/1.1 200 OK", headers, "Hello world!");
-        assertThat(responseConverter.responseToString(myResponse), is("HTTP/1.1 200 OK\nfirst: example\nsecond: example2\n\nHello world!"));
+        response = new Response("HTTP/1.1 200 OK", headers,"Hello world!");
+        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\nfirst: example\nsecond: example2\n\nHello world!"));
     }
 
     @Test
@@ -37,7 +49,7 @@ public class ResponseConverterTest {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("first", "example");
         headers.put("second", "example2");
-        assertThat(responseConverter.headersIntoString(headers), is("first: example\nsecond: example2\n"));
+        assertThat(responseConverter.headersIntoString(headers), is("first: example\nsecond: example2"));
     }
 
 }

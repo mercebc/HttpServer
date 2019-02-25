@@ -1,3 +1,4 @@
+import Handlers.Response;
 import Stubs.SocketStub;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +22,17 @@ public class CommunicatorTest {
     }
 
     @Test
-     public void ReceivesARequestString() throws IOException {
-        com.getRequest();
-        assertThat(com.getRequestString(), is("GET /simple_get HTTP/1.1"));
+     public void ReceivesARequest() throws IOException {
+        Request request = com.getRequest();
+        String requestLine = String.join(" ", request.getRequestLine());
+        assertThat(requestLine, is("GET /simple_get HTTP/1.1"));
+    }
+
+    @Test
+    public void sendsAResponse() throws IOException {
+        Response response = new Response("HTTP/1.1 404 Not Found");
+        com.sendResponse(response);
+        assertThat(socket.getOutputStream().toString().trim(), is("HTTP/1.1 404 Not Found"));
+
     }
 }

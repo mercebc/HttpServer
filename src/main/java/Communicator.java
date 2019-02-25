@@ -14,10 +14,6 @@ public class Communicator {
         this.requestConverter = new RequestConverter();
     }
 
-    public String getRequestString() {
-        return requestString;
-    }
-
     public Request getRequest() throws IOException {
         requestString = socketHelper.readFromSocket();
         return requestConverter.stringToRequest(requestString);

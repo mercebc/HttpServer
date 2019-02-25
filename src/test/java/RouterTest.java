@@ -1,6 +1,8 @@
 import Handlers.Response;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -13,10 +15,20 @@ public class RouterTest {
     public void simpleGet(){
         router.config();
 
-        request = new Request("GET", "/simple_get", protocol);
+        request = new Request("GET", "/simple_get", protocol, new HashMap<>(), "");
         Response response = router.route(request);
         assertThat(response.getStatusLine(), is("HTTP/1.1 200 OK"));
     }
+
+    @Test
+    public void notFound(){
+        router.config();
+
+        request = new Request("GET", "/simple_not_get", protocol, new HashMap<>(), "");
+        Response response = router.route(request);
+        assertThat(response.getStatusLine(), is("HTTP/1.1 404 Not Found"));
+    }
+
 
     @Test
     public void configuresTheRouter(){

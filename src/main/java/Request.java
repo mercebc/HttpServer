@@ -2,28 +2,44 @@ import java.util.HashMap;
 
 public class Request {
 
-    private String[] request_line;
+    private String[] requestLine;
     private HashMap<String, String> headers;
-    private String message_body;
+    private String messageBody;
 
 
-    public Request(String verb, String URI, String protocol) {
+    public Request(String verb, String URI, String protocol, HashMap<String, String> headers, String messageBody) {
 
-        this.request_line = new String[3];
+        this.requestLine = new String[3];
 
-        this.request_line[0] = verb;
-        this.request_line[1] = URI;
-        this.request_line[2] = protocol;
+        this.requestLine[0] = verb;
+        this.requestLine[1] = URI;
+        this.requestLine[2] = protocol;
+
+        this.headers = headers;
+
+        this.messageBody = messageBody;
 
     }
 
-    public String getMethod(){ return request_line[0]; }
+    public String[] getRequestLine() {
+        return requestLine;
+    }
+
+    public String getMethod(){ return requestLine[0]; }
 
     public String getURI() {
-        return request_line[1];
+        return requestLine[1];
     }
 
     public String getProtocol() {
-        return request_line[2];
+        return requestLine[2];
+    }
+
+    public HashMap<String, String> getHeaders() {
+        return headers;
+    }
+
+    public String getMessageBody() {
+        return messageBody;
     }
 }

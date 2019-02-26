@@ -3,6 +3,9 @@ package Handlers;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -11,9 +14,9 @@ public class RedirectHandlerTest {
     private Response response;
 
     @Before
-    public void setUp(){
+    public void setUp() throws InvocationTargetException, IllegalAccessException {
         redirectHandler = new RedirectHandler();
-        response = redirectHandler.respondToRequest();
+        response = redirectHandler.respondToRequest(new Request("GET", "/redirect", "HTTP/1.1",  new HashMap<>(), ""));
     }
 
     @Test

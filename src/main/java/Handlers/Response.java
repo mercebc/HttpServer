@@ -16,6 +16,11 @@ public class Response {
         this.body = body;
     }
 
+    public Response(String statusLine, HashMap<String, String> headers){
+        this.statusLine = statusLine;
+        this.headers = headers;
+    }
+
     public Response(String statusLine, HashMap<String, String> headers, String body){
         this.statusLine = statusLine;
         this.headers = headers;

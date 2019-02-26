@@ -23,7 +23,7 @@ public class Router {
         if (resources.get(URI) != null) {
             return resources.get(URI).respondToRequest(request);
         }else{
-            return new NotFoundHandler().respondToRequest();
+            return new Response("HTTP/1.1 404 Not Found");
         }
 
     }
@@ -35,7 +35,6 @@ public class Router {
         addResource("/method_options", new MethodOptionsHandler());
         addResource("/method_options2", new MethodOptions2Handler());
         addResource("/echo_body", new EchoBodyHandler());
-
     }
 }
 

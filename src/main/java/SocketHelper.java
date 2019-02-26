@@ -1,11 +1,11 @@
 import java.io.*;
 import java.net.Socket;
 
-public class SocketCommunicator {
+public class SocketHelper {
     private Socket socket;
     private boolean messageSent = false;
 
-    public SocketCommunicator(Socket socket) {
+    public SocketHelper(Socket socket) {
         this.socket = socket;
     }
 
@@ -26,7 +26,7 @@ public class SocketCommunicator {
             request.write((byte) result);
         } while (inputStream.available() > 0);
 
-        return request.toString("UTF-8");
+        return request.toString();
     }
 
 
@@ -34,6 +34,7 @@ public class SocketCommunicator {
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
         out.println(message);
         messageSent = !out.checkError();
+        closeConnection();
     }
 
     public void closeConnection() throws IOException {

@@ -10,9 +10,9 @@ import java.io.PrintStream;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SocketServerCommunicatorTest {
+public class SocketHelperTest {
 
-    private SocketCommunicator socketCommunicator;
+    private SocketHelper socketHelper;
     private PrintStream output;
     private ByteArrayInputStream input;
     private ByteArrayOutputStream out;
@@ -28,30 +28,30 @@ public class SocketServerCommunicatorTest {
 
         SocketStub socket = new SocketStub(input, output);
 
-        socketCommunicator = new SocketCommunicator(socket);
+        socketHelper = new SocketHelper(socket);
     }
 
     @Test
     public void readsLineFromSocket() throws IOException {
-        assertThat(socketCommunicator.readFromSocket(), is("Hello\nWorld"));
+        assertThat(socketHelper.readFromSocket(), is("Hello\nWorld"));
     }
 
     @Test
     public void writesToSocket() throws IOException {
-        socketCommunicator.printToSocket("Hello");
+        socketHelper.printToSocket("Hello");
         assertThat(out.toString().trim(), is("Hello"));
     }
 
     @Test
     public void hasMessageBeenSent() throws IOException {
-        socketCommunicator.printToSocket("Hello");
-        assertThat(socketCommunicator.isMessageSent(), is(true));
+        socketHelper.printToSocket("Hello");
+        assertThat(socketHelper.isMessageSent(), is(true));
     }
 
     @Test
     public void ClosesASocket() throws IOException {
-        socketCommunicator.closeConnection();
-        assertThat(socketCommunicator.getSocket().isClosed(), is(true));
+        socketHelper.closeConnection();
+        assertThat(socketHelper.getSocket().isClosed(), is(true));
     }
 
 }

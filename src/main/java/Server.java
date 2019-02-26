@@ -1,16 +1,23 @@
+import Handlers.Response;
+
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class Server {
-    private ServerListener serverListener;
+    private Listener listener;
+    private Router router;
 
-    public Server(ServerListener serverListener){
-        this.serverListener = serverListener;
+    public Server(Listener listener, Router router){
+        this.listener = listener;
+        this.router = router;
     }
 
-    public void start() throws IOException {
+    public void start() throws IOException, InvocationTargetException, IllegalAccessException {
         while (true) {
-            SocketCommunicator socketCommunicator = serverListener.connect();
-            new ServerCommunicator(socketCommunicator).handleRequest();
+            Communicator communicator = new Communicator(listener.connect());
+            Response response = router.route(communicator.getRequest());
+            communicator.sendResponse(response);
         }
     }
+
 }

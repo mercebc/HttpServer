@@ -11,8 +11,8 @@ import java.net.Socket;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ServerListenerTest {
-    private ServerListener serverListener;
+public class ListenerTest {
+    private Listener listener;
     private Socket socket;
     private ServerSocketStub sstub;
 
@@ -20,17 +20,17 @@ public class ServerListenerTest {
     public void Setup() throws IOException {
         socket = new SocketStub(new ByteArrayInputStream("hello".getBytes()), new ByteArrayOutputStream());
         sstub = new ServerSocketStub(socket);
-        serverListener = new ServerListener(sstub);
+        listener = new Listener(sstub);
     }
 
     @Test
     public void createsAStreamSocket() throws IOException {
-        assertThat(serverListener.connect(), is(SocketCommunicator.class));
+        assertThat(listener.connect(), is(SocketHelper.class));
     }
 
     @Test
     public void acceptsAConnection() throws IOException {
-        serverListener.connect();
+        listener.connect();
         assertThat(sstub.hasAcceptBeenCalled(), is(true));
     }
 

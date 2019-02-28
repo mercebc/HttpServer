@@ -1,3 +1,4 @@
+import Handlers.Request;
 import Handlers.Response;
 
 import java.io.IOException;
@@ -14,10 +15,20 @@ public class Server {
 
     public void start() throws IOException, InvocationTargetException, IllegalAccessException {
         while (true) {
-            Communicator communicator = new Communicator(listener.connect());
-            Response response = router.route(communicator.getRequest());
-            communicator.sendResponse(response);
+            SocketIO socketIO = listener.connect();
+            Response response = router.route(getRequest(socketIO));
+            sendResponse(socketIO, response);
         }
+    }
+
+    private void sendResponse(SocketIO socketIO, Response response) throws IOException {
+        String responseString = ResponseConverter.responseToString(response);
+        socketIO.printToSocket(responseString);
+    }
+
+    private Request getRequest(SocketIO socketIO) throws IOException {
+        String requestString = socketIO.readFromSocket();
+        return RequestConverter.stringToRequest(requestString);
     }
 
 }

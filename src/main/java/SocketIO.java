@@ -1,11 +1,11 @@
 import java.io.*;
 import java.net.Socket;
 
-public class SocketHelper {
+public class SocketIO {
     private Socket socket;
     private boolean messageSent = false;
 
-    public SocketHelper(Socket socket) {
+    public SocketIO(Socket socket) {
         this.socket = socket;
     }
 
@@ -26,13 +26,14 @@ public class SocketHelper {
             request.write((byte) result);
         } while (inputStream.available() > 0);
 
+        System.out.println(request.toString());
         return request.toString();
     }
 
 
     public void printToSocket(String message) throws IOException {
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        out.println(message);
+        out.print(message);
         messageSent = !out.checkError();
         closeConnection();
     }

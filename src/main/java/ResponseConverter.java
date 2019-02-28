@@ -5,30 +5,31 @@ import java.util.Iterator;
 
 public class ResponseConverter {
     private static final String NEWLINE = "\n";
+    private static final String CRLF = "\r\n";
     private static final String EMPTY = "";
 
-   public String responseToString(Response response) {
+   public static String responseToString(Response response) {
 
        String statusLine = response.getStatusLine().trim();
        String headers = EMPTY;
        String messageBody = EMPTY;
 
-       if(hasHeaders(response)) {headers = NEWLINE + headersIntoString(response.getHeaders());}
-       if(hasBody(response)) {messageBody = NEWLINE + NEWLINE + response.getBody();}
+       if(hasHeaders(response)) {headers = headersIntoString(response.getHeaders()) + CRLF;}
+       if(hasBody(response)) {messageBody = response.getBody();}
 
-       return statusLine + headers + messageBody;
+       return statusLine + NEWLINE + headers + CRLF + messageBody;
 
    }
 
-   private boolean hasHeaders(Response response){
+   private static boolean hasHeaders(Response response){
        return !response.getHeaders().isEmpty();
    }
 
-   private boolean hasBody(Response response){
+   private static boolean hasBody(Response response){
        return !response.getBody().isEmpty();
    }
 
-   public String headersIntoString(HashMap<String, String> headers){
+   public static String headersIntoString(HashMap<String, String> headers){
        String result = EMPTY;
 
        Iterator it = headers.entrySet().iterator();

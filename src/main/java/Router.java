@@ -23,7 +23,7 @@ public class Router {
         if (resources.get(URI) != null) {
             return resources.get(URI).respondToRequest(request);
         }else{
-            return new Response("HTTP/1.1 404 Not Found");
+            return new Response(StatusLineBuilder.create(404));
         }
 
     }

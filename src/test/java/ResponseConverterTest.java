@@ -20,19 +20,19 @@ public class ResponseConverterTest {
     @Test
     public void convertsResponseWithNoBodyIntoString(){
         response = new Response("HTTP/1.1 200 OK");
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK"));
+        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\r\n"));
     }
 
     @Test
     public void convertsResponseWithEmptyBodyIntoString(){
         response = new Response("HTTP/1.1 200 OK", "");
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK"));
+        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\r\n"));
     }
 
     @Test
     public void convertsResponseWithBodyIntoString(){
         response = new Response("HTTP/1.1 200 OK", "Hello world!");
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\nHello world!"));
+        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\r\nHello world!"));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ResponseConverterTest {
         headers.put("first", "example");
         headers.put("second", "example2");
         response = new Response("HTTP/1.1 200 OK", headers,"Hello world!");
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\nfirst: example\nsecond: example2\n\nHello world!"));
+        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\nfirst: example\nsecond: example2\r\n\r\nHello world!"));
     }
 
     @Test

@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -25,7 +26,7 @@ public class ListenerTest {
 
     @Test
     public void createsAStreamSocket() throws IOException {
-        assertThat(listener.connect(), is(SocketIO.class));
+        assertThat(listener.connect(), instanceOf(SocketIO.class));
     }
 
     @Test

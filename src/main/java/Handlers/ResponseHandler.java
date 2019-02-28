@@ -17,7 +17,7 @@ public abstract class ResponseHandler {
     }
 
     public Response respondToRequest(Request request) throws InvocationTargetException, IllegalAccessException {
-        List<Method> methods = filterHTTPMethods(ResponseHandler.class);
+        List<Method> methods = filterHTTPMethods(this.getClass());
 
         for (Method method : methods) {
             if(request.getMethod().equals(method.getName().toUpperCase())){
@@ -25,29 +25,8 @@ public abstract class ResponseHandler {
                 return (Response) method.invoke(this, request);
             }
         }
-        return new Response(StatusLineBuilder.create(404));
-    }
-
-    public Response get(Request request) {
         return new Response(StatusLineBuilder.create(405), getHeaders());
     }
-
-    public Response post(Request request) {
-        return new Response(StatusLineBuilder.create(405), getHeaders());
-    }
-
-    public Response head(Request request) {
-        return new Response(StatusLineBuilder.create(405), getHeaders());
-    }
-
-    public Response options(Request request) {
-        return new Response(StatusLineBuilder.create(405), getHeaders());
-    }
-
-    public Response put(Request request) {
-        return new Response(StatusLineBuilder.create(405), getHeaders());
-    }
-
 
     public void addAllowedMethodsHeader(Class<?> currentClass){
         List<Method> classHttpMethods = filterHTTPMethods(currentClass);

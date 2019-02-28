@@ -8,7 +8,7 @@ public class Router {
 
     private Map<String, ResponseHandler> resources = new HashMap<>();
 
-    public void addResource(String resource, ResponseHandler responseHandler){
+    private void addResource(String resource, ResponseHandler responseHandler){
         resources.put(resource, responseHandler);
     }
 

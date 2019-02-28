@@ -31,7 +31,6 @@ public class RouterTest {
         assertThat(response.getStatusLine(), is("HTTP/1.1 404 Not Found"));
     }
 
-
     @Test
     public void configuresTheRouter(){
         router.config();

@@ -1,4 +1,6 @@
-import Handlers.Request;
+package Core;
+
+import Core.Request;
 import org.junit.Before;
 import org.junit.Test;
 

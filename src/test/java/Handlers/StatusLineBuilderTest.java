@@ -1,5 +1,6 @@
 package Handlers;
 
+import Core.StatusLineBuilder;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

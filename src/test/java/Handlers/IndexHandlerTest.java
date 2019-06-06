@@ -1,5 +1,7 @@
 package Handlers;
 
+import Core.Request;
+import Core.Response;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,7 +30,7 @@ public class IndexHandlerTest {
 
     @Test
     public void responseHasHTMLinBody(){
-        String bodyExpected = "<html><body><p>Find out if you are going to need wellies in your town!</p></body></html>";
+        String bodyExpected = "<html>\n<body>\n<p>Find out if you are going to need wellies in your town!</p>\n</body></html>\n\n";
         assertThat(response.getBody(), is(bodyExpected));
     }
 

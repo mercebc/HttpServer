@@ -1,4 +1,4 @@
-# HTTP Server
+# HTTP Core
 
 Web server that handles requests from the browser to `localhost` hostname and `5000` port.
 

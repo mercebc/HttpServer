@@ -1,5 +1,4 @@
-import Handlers.Request;
-import Handlers.Response;
+package Core;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

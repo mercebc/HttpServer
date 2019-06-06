@@ -1,3 +1,5 @@
+package Core;
+
 import Handlers.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -29,12 +31,14 @@ public class Router {
     }
 
     public void config(){
+        addResource("/", new IndexHandler());
         addResource("/simple_get", new SimpleGetHandler());
         addResource("/redirect", new RedirectHandler());
         addResource("/get_with_body", new GetWithBodyHandler());
         addResource("/method_options", new MethodOptionsHandler());
         addResource("/method_options2", new MethodOptions2Handler());
         addResource("/echo_body", new EchoBodyHandler());
+
     }
 }
 

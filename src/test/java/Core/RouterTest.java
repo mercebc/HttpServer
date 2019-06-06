@@ -1,5 +1,7 @@
-import Handlers.Request;
-import Handlers.Response;
+package Core;
+
+import Core.Request;
+import Core.Response;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;

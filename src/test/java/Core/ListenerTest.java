@@ -1,3 +1,5 @@
+package Core;
+
 import Stubs.ServerSocketStub;
 import Stubs.SocketStub;
 import org.junit.Before;

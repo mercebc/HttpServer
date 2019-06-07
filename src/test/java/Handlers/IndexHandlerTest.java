@@ -2,9 +2,13 @@ package Handlers;
 
 import Core.Request;
 import Core.Response;
+import Util.PublicFileReader;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
@@ -15,10 +19,22 @@ public class IndexHandlerTest {
     private IndexHandler indexHandler;
     private Response response;
     private Request request;
+    private PublicFileReader publicFileReader;
+    private File index;
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Before
-    public void SetUp() throws InvocationTargetException, IllegalAccessException {
-        indexHandler = new IndexHandler();
+    public void SetUp() throws InvocationTargetException, IllegalAccessException, IOException {
+        index = folder.newFile("Index.html");
+        PrintWriter writer = new PrintWriter(index.getAbsoluteFile(), "UTF-8");
+        writer.println("The first line");
+        writer.println("The second line");
+        writer.close();
+
+        publicFileReader = new PublicFileReader(folder.getRoot().getAbsolutePath() + "/");
+        indexHandler = new IndexHandler(publicFileReader);
         request =  new Request("GET", "/","HTTP/1.1", new HashMap<>(), "");
         response = indexHandler.respondToRequest(request);
     }
@@ -30,7 +46,7 @@ public class IndexHandlerTest {
 
     @Test
     public void responseHasHTMLinBody(){
-        String bodyExpected = "<html>\n<body>\n<p>Find out if you are going to need wellies in your town!</p>\n</body></html>\n\n";
+        String bodyExpected = "The first line\nThe second line\n";
         assertThat(response.getBody(), is(bodyExpected));
     }
 

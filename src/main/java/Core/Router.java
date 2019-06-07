@@ -1,6 +1,7 @@
 package Core;
 
 import Handlers.*;
+import Util.PublicFileReader;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -30,8 +31,8 @@ public class Router {
 
     }
 
-    public void config(){
-        addResource("/", new IndexHandler());
+    public void config(PublicFileReader publicFileReader){
+        addResource("/", new IndexHandler(publicFileReader));
         addResource("/simple_get", new SimpleGetHandler());
         addResource("/redirect", new RedirectHandler());
         addResource("/get_with_body", new GetWithBodyHandler());

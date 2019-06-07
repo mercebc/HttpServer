@@ -50,4 +50,14 @@ public class IndexHandlerTest {
         assertThat(response.getBody(), is(bodyExpected));
     }
 
+    @Test
+    public void responseWithContentLengthHeaders(){
+        assertThat(response.getHeaders().get("Content-Length"), is("31"));
+    }
+
+    @Test
+    public void responseWithContentTypeHeaders(){
+        assertThat(response.getHeaders().get("Content-Type"), is("text/html; charset=utf-8"));
+    }
+
 }

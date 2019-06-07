@@ -16,4 +16,8 @@ public class PublicFileReader {
         byte[] encoded = Files.readAllBytes(Paths.get(path + filename));
         return new String(encoded, Charset.defaultCharset());
     }
+
+    public String MIMEType(String filename) {
+       return "text/html; charset=utf-8";
+    }
 }

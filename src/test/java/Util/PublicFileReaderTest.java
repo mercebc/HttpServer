@@ -37,4 +37,10 @@ public class PublicFileReaderTest {
         assertThat(publicFileReader.read("Index.html"), is(expectedBody));
     }
 
+    @Test
+    public void createMIMEType() {
+        String expectedMIME = "text/html; charset=utf-8";
+        assertThat(publicFileReader.MIMEType("Index.html"), is(expectedMIME));
+    }
+
 }

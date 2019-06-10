@@ -44,6 +44,11 @@ public class RequestConverter {
 
 
     private static Request createRequest(String[] requestLine, HashMap<String, String> headers, String body) {
-        return new Request(requestLine[0], requestLine[1], requestLine[2], headers, body);
+        try {
+            return new Request(requestLine[0], requestLine[1], requestLine[2], headers, body);
+        } catch (Exception ArrayIndexOutOfBoundsException) {
+            return new Request("","","");
+        }
+
     }
 }

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -48,7 +49,8 @@ public class GetWithBodyHandlerTest {
 
         @Test
         public void getAllowedMethodsHeader() {
-            assertThat(response.getHeaders().get("Allow"), is("HEAD,OPTIONS"));
+            assertThat(response.getHeaders().get("Allow"), containsString("OPTIONS"));
+            assertThat(response.getHeaders().get("Allow"), containsString("HEAD"));
         }
 
         @Test

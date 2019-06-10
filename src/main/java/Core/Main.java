@@ -1,3 +1,7 @@
+package Core;
+
+import Util.PublicFileReader;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
@@ -5,11 +9,14 @@ import java.net.ServerSocket;
 public class Main {
     public static void main(String[] args) throws IOException, InvocationTargetException, IllegalAccessException {
 
-        int portNumber = 5000;
+        int portNumber = Integer.parseInt(System.getenv("PORT"));
+        String path = System.getProperty("path") + "/";
+
         Listener listener = new Listener(new ServerSocket(portNumber));
 
         Router router = new Router();
-        router.config();
+        PublicFileReader publicFileReader = new PublicFileReader(path);
+        router.config(publicFileReader);
 
         Server server = new Server(listener, router);
         server.start();

@@ -1,4 +1,4 @@
-import Handlers.Request;
+package Core;
 
 import java.util.HashMap;
 

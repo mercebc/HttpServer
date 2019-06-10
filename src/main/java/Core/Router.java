@@ -1,4 +1,7 @@
+package Core;
+
 import Handlers.*;
+import Util.PublicFileReader;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -28,13 +31,15 @@ public class Router {
 
     }
 
-    public void config(){
+    public void config(PublicFileReader publicFileReader){
+        addResource("/", new IndexHandler(publicFileReader));
         addResource("/simple_get", new SimpleGetHandler());
         addResource("/redirect", new RedirectHandler());
         addResource("/get_with_body", new GetWithBodyHandler());
         addResource("/method_options", new MethodOptionsHandler());
         addResource("/method_options2", new MethodOptions2Handler());
         addResource("/echo_body", new EchoBodyHandler());
+
     }
 }
 

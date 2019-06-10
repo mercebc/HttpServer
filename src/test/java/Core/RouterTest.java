@@ -1,5 +1,6 @@
-import Handlers.Request;
-import Handlers.Response;
+package Core;
+
+import Util.PublicFileReader;
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,10 +13,12 @@ public class RouterTest {
     private Request request;
     private String protocol = "HTTP/1.1";
     private Router router = new Router();
+    private PublicFileReader publicFileReader;
 
     @Test
     public void simpleGet() throws InvocationTargetException, IllegalAccessException {
-        router.config();
+        publicFileReader = new PublicFileReader("");
+        router.config(publicFileReader);
 
         request = new Request("GET", "/simple_get", protocol, new HashMap<>(), "");
         Response response = router.route(request);
@@ -24,7 +27,8 @@ public class RouterTest {
 
     @Test
     public void notFound() throws InvocationTargetException, IllegalAccessException {
-        router.config();
+        publicFileReader = new PublicFileReader("");
+        router.config(publicFileReader);
 
         request = new Request("GET", "/simple_not_get", protocol, new HashMap<>(), "");
         Response response = router.route(request);
@@ -33,7 +37,9 @@ public class RouterTest {
 
     @Test
     public void configuresTheRouter(){
-        router.config();
+        publicFileReader = new PublicFileReader("");
+        router.config(publicFileReader);
+
         assertThat(router.getResources().isEmpty(), is(false));
     }
 

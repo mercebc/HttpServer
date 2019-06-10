@@ -1,5 +1,9 @@
 package Handlers;
 
+import Core.Request;
+import Core.Response;
+import Core.StatusLineBuilder;
+
 public class EchoBodyHandler extends ResponseHandler {
 
     public Response post(Request request) {

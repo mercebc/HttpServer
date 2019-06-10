@@ -9,8 +9,8 @@ import java.net.ServerSocket;
 public class Main {
     public static void main(String[] args) throws IOException, InvocationTargetException, IllegalAccessException {
 
-        int portNumber = 5000;
-        String path = "/Users/miss.merce/Workspace/Java/HttpServer/Public/";
+        int portNumber = Integer.parseInt(System.getProperty("port"));
+        String path = System.getProperty("path");
 
         Listener listener = new Listener(new ServerSocket(portNumber));
 

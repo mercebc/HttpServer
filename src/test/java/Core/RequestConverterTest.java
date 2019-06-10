@@ -1,6 +1,5 @@
 package Core;
 
-import Core.Request;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +14,13 @@ public class RequestConverterTest {
     public void Setup() {
         requestConverter = new RequestConverter();
         requestString = "GET /simple_request HTTP/1.1";
+    }
+
+    @Test
+    public void dealWithBadRequest() {
+        String badRequest = "";
+        Request request = requestConverter.stringToRequest(badRequest);
+        assertThat(request.getMethod(), is(""));
     }
 
     @Test

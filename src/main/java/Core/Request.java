@@ -20,6 +20,12 @@ public class Request {
 
     }
 
+    public Request(String method, String URI, String protocol) {
+        this.method = method;
+        this.URI = URI;
+        this.protocol = protocol;
+    }
+
     public String getMethod(){ return method; }
 
     public String getURI() { return URI; }

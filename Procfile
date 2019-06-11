@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Dpath=$PWD"/public" -jar build/libs/merce-1.0-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -Dpath=$PWD"/Public" -jar build/libs/merce-1.0-SNAPSHOT.jar

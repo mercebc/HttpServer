@@ -1,8 +1,8 @@
 package Handlers;
 
-import Core.Request;
-import Core.Response;
-import Util.PublicFileReader;
+import Request.Request;
+import Response.Response;
+import Util.PublicFileManager;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class IndexHandlerTest {
     private IndexHandler indexHandler;
     private Response response;
     private Request request;
-    private PublicFileReader publicFileReader;
+    private PublicFileManager publicFileManager;
     private File index;
 
     @Rule
@@ -33,8 +33,8 @@ public class IndexHandlerTest {
         writer.println("The second line");
         writer.close();
 
-        publicFileReader = new PublicFileReader(folder.getRoot().getAbsolutePath() + "/");
-        indexHandler = new IndexHandler(publicFileReader);
+        publicFileManager = new PublicFileManager(folder.getRoot().getAbsolutePath() + "/");
+        indexHandler = new IndexHandler(publicFileManager);
         request =  new Request("GET", "/","HTTP/1.1", new HashMap<>(), "");
         response = indexHandler.respondToRequest(request);
     }

@@ -1,24 +1,23 @@
 package Handlers.PublicFileHandlers;
 
-import Core.Request;
-import Core.Response;
-import Core.StatusLineBuilder;
+import Request.Request;
+import Response.Response;
+import Response.StatusLineBuilder;
 import Handlers.ResponseHandler;
-import Util.PublicFileReader;
+import Util.PublicFileManager;
 
 import java.io.IOException;
 
 public class ImageHandler extends ResponseHandler {
-    PublicFileReader publicFileReader;
+    PublicFileManager publicFileManager;
 
-    public ImageHandler(PublicFileReader publicFileReader) {
-        this.publicFileReader = publicFileReader;
+    public ImageHandler(PublicFileManager publicFileManager) {
+        this.publicFileManager = publicFileManager;
     }
 
     public Response get(Request request) throws IOException {
-        String imageBody = publicFileReader.readImage("/images/wellies.png");
-        System.out.println(imageBody);
-        addHeader("Content-Type", publicFileReader.MIMEType("png"));
+        String imageBody = publicFileManager.read("/images/wellies.png");
+        addHeader("Content-Type", publicFileManager.MIMEType("png"));
         addHeader("Content-Length", String.valueOf(imageBody.length()));
         return new Response(StatusLineBuilder.create(200), getHeaders(), imageBody);
     }

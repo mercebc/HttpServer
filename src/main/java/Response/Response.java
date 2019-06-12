@@ -1,4 +1,4 @@
-package Core;
+package Response;
 
 import java.util.HashMap;
 

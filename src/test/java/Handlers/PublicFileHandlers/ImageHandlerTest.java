@@ -1,8 +1,8 @@
 package Handlers.PublicFileHandlers;
 
-import Core.Request;
-import Core.Response;
-import Util.PublicFileReader;
+import Request.Request;
+import Response.Response;
+import Util.PublicFileManager;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class ImageHandlerTest {
     private ImageHandler imageHandler;
     private Response response;
     private Request request;
-    private PublicFileReader publicFileReader;
+    private PublicFileManager publicFileManager;
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -37,8 +37,8 @@ public class ImageHandlerTest {
         writer.println("T/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxQTEhUTExQWFhUXGCEYGRgYGR4dIRsaGyAgHyId");
         writer.close();
 
-        publicFileReader = new PublicFileReader(folder.getRoot().getAbsolutePath() + "/");
-        imageHandler = new ImageHandler(publicFileReader);
+        publicFileManager = new PublicFileManager(folder.getRoot().getAbsolutePath() + "/");
+        imageHandler = new ImageHandler(publicFileManager);
         request =  new Request("GET", "images/wellies.png","HTTP/1.1", new HashMap<>(), "");
         response = imageHandler.respondToRequest(request);
     }

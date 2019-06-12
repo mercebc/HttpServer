@@ -3,7 +3,7 @@ package Core;
 import Stubs.ServerSocketStub;
 import Stubs.ServerStatusStub;
 import Stubs.SocketStub;
-import Util.PublicFileReader;
+import Util.PublicFileManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,9 +23,9 @@ public class ServerTest {
 
     @Before
     public void Setup() {
-        router = new Router();
-        PublicFileReader publicFileReader = new PublicFileReader("");
-        router.config(publicFileReader);
+        PublicFileManager publicFileManager = new PublicFileManager("");
+        router = new Router(publicFileManager);
+        router.config();
 
         status = new ServerStatusStub(true);
     }

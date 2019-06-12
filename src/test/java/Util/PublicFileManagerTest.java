@@ -13,8 +13,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class PublicFileReaderTest {
-    private PublicFileReader publicFileReader;
+public class PublicFileManagerTest {
+    private PublicFileManager publicFileManager;
     private File indexHtml;
 
     @Rule
@@ -22,7 +22,7 @@ public class PublicFileReaderTest {
 
     @Before
     public void SetUp() throws IOException {
-        publicFileReader = new PublicFileReader(folder.getRoot().getAbsolutePath() + "/");
+        publicFileManager = new PublicFileManager(folder.getRoot().getAbsolutePath() + "/");
 
         indexHtml = folder.newFile("Index.html");
         PrintWriter writer = new PrintWriter(indexHtml.getAbsoluteFile(), "UTF-8");
@@ -34,25 +34,25 @@ public class PublicFileReaderTest {
     @Test
     public void canReadAFile() throws IOException {
         String expectedBody = "The first line\nThe second line\n";
-        assertThat(publicFileReader.read("Index.html"), is(expectedBody));
+        assertThat(publicFileManager.read("Index.html"), is(expectedBody));
     }
 
     @Test
     public void createHtmlMIMEType() {
         String expectedMIME = "text/html; charset=utf-8";
-        assertThat(publicFileReader.MIMEType("html"), is(expectedMIME));
+        assertThat(publicFileManager.MIMEType("html"), is(expectedMIME));
     }
 
     @Test
     public void createCssMIMEType() {
         String expectedMIME = "text/css; charset=utf-8";
-        assertThat(publicFileReader.MIMEType("css"), is(expectedMIME));
+        assertThat(publicFileManager.MIMEType("css"), is(expectedMIME));
     }
 
     @Test
     public void createImageMIMEType() {
         String expectedMIME = "image/png; base64";
-        assertThat(publicFileReader.MIMEType("png"), is(expectedMIME));
+        assertThat(publicFileManager.MIMEType("png"), is(expectedMIME));
     }
 
 }

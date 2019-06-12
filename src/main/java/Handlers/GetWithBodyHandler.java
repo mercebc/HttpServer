@@ -1,8 +1,8 @@
 package Handlers;
 
-import Core.Request;
-import Core.Response;
-import Core.StatusLineBuilder;
+import Request.Request;
+import Response.Response;
+import Response.StatusLineBuilder;
 
 public class GetWithBodyHandler extends ResponseHandler {
     public Response head(Request request) { return new Response(StatusLineBuilder.create(200), getHeaders()); }

@@ -1,8 +1,8 @@
 package Handlers.PublicFileHandlers;
 
-import Core.Request;
-import Core.Response;
-import Util.PublicFileReader;
+import Request.Request;
+import Response.Response;
+import Util.PublicFileManager;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +21,7 @@ public class CssHandlerTest {
     private CssHandler cssHandler;
     private Response response;
     private Request request;
-    private PublicFileReader publicFileReader;
+    private PublicFileManager publicFileManager;
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -35,8 +35,8 @@ public class CssHandlerTest {
         writer.println("*,:after,:before{box-sizing:inherit}");
         writer.close();
 
-        publicFileReader = new PublicFileReader(folder.getRoot().getAbsolutePath() + "/");
-        cssHandler = new CssHandler(publicFileReader);
+        publicFileManager = new PublicFileManager(folder.getRoot().getAbsolutePath() + "/");
+        cssHandler = new CssHandler(publicFileManager);
         request =  new Request("GET", "/","HTTP/1.1", new HashMap<>(), "");
         response = cssHandler.respondToRequest(request);
     }

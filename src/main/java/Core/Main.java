@@ -1,6 +1,6 @@
 package Core;
 
-import Util.PublicFileReader;
+import Util.PublicFileManager;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -14,10 +14,11 @@ public class Main {
 
         Listener listener = new Listener(new ServerSocket(portNumber));
 
-        Router router = new Router();
-        PublicFileReader publicFileReader = new PublicFileReader(path);
-        router.config(publicFileReader);
-        router.publicFiles(publicFileReader);
+        PublicFileManager publicFileManager = new PublicFileManager(path);
+        Router router = new Router(publicFileManager);
+
+        router.config();
+        publicFileManager.config();
 
         ServerStatus status = new ServerStatus(true);
 

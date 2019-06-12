@@ -1,5 +1,10 @@
 package Core;
 
+import Request.Request;
+import Request.RequestConverter;
+import Response.Response;
+import Response.ResponseConverter;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 

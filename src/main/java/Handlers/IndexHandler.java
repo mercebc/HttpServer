@@ -2,21 +2,21 @@ package Handlers;
 
 import java.io.IOException;
 
-import Core.Request;
-import Core.Response;
-import Core.StatusLineBuilder;
-import Util.PublicFileReader;
+import Request.Request;
+import Response.Response;
+import Response.StatusLineBuilder;
+import Util.PublicFileManager;
 
 public class IndexHandler extends ResponseHandler {
-    PublicFileReader publicFileReader;
+    PublicFileManager publicFileManager;
 
-    public IndexHandler(PublicFileReader publicFileReader) {
-        this.publicFileReader = publicFileReader;
+    public IndexHandler(PublicFileManager publicFileManager) {
+        this.publicFileManager = publicFileManager;
     }
 
     public Response get(Request request) throws IOException {
-        String htmlBody = publicFileReader.read("Index.html");
-        addHeader("Content-Type", publicFileReader.MIMEType("html"));
+        String htmlBody = publicFileManager.read("Index.html");
+        addHeader("Content-Type", publicFileManager.MIMEType("html"));
         addHeader("Content-Length", String.valueOf(htmlBody.length()));
         return new Response(StatusLineBuilder.create(200), getHeaders(), htmlBody);
 

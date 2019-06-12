@@ -1,24 +1,33 @@
 package Response;
 
+import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class ResponseConverter {
-    private static final String NEWLINE = "\n";
-    private static final String CRLF = "\r\n";
-    private static final String EMPTY = "";
+    private static final byte[] CRLF = "\r\n".getBytes();
+    private static final byte[] EMPTY = new byte[0];
 
-   public static String responseToString(Response response) {
+   public static byte[] responseToBytes(Response response) {
+       byte[] statusLine = response.getStatusLine().trim().getBytes();
+       byte[] headers = EMPTY;
+       byte[] messageBody = EMPTY;
 
-       String statusLine = response.getStatusLine().trim();
-       String headers = EMPTY;
-       String messageBody = EMPTY;
-
-       if(hasHeaders(response)) {headers = headersIntoString(response.getHeaders()) + CRLF;}
+       if(hasHeaders(response)) {headers = headersIntoBytes(response.getHeaders());}
        if(hasBody(response)) {messageBody = response.getBody();}
 
-       return statusLine + NEWLINE + headers + CRLF + messageBody;
 
+       byte[] allByteArray = new byte[statusLine.length + CRLF.length + headers.length
+                + CRLF.length + messageBody.length];
+
+       ByteBuffer buff = ByteBuffer.wrap(allByteArray);
+       buff.put(statusLine);
+       buff.put(CRLF);
+       buff.put(headers);
+       buff.put(CRLF);
+       buff.put(messageBody);
+
+       return buff.array();
    }
 
    private static boolean hasHeaders(Response response){
@@ -26,19 +35,20 @@ public class ResponseConverter {
    }
 
    private static boolean hasBody(Response response){
-       return !response.getBody().isEmpty();
+       return response.getBody().length != 0;
    }
 
-   public static String headersIntoString(HashMap<String, String> headers){
-       String result = EMPTY;
+   public static byte[] headersIntoBytes(HashMap<String, String> headers){
+       String crlf = "\r\n";
+       String result = "";
 
        Iterator it = headers.entrySet().iterator();
        while (it.hasNext()) {
            HashMap.Entry resource = (HashMap.Entry) it.next();
-           result += resource.getKey() + ": " + resource.getValue() + NEWLINE;
+           result += resource.getKey() + ": " + resource.getValue() + crlf;
            it.remove();
        }
-       return result.trim();
+       return result.getBytes();
    }
 
 }

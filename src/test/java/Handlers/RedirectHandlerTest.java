@@ -38,7 +38,7 @@ public class RedirectHandlerTest {
         public void responseWithLocationHeaders(){ assertThat(response.getHeaders().get("Location"), is("http://0.0.0.0:5000/simple_get")); }
 
         @Test
-        public void responseHasNoBody(){ assertThat(response.getBody(), is("")); }
+        public void responseHasNoBody(){ assertThat(response.getBody(), is(new byte[0])); }
     }
 
     @RunWith(value = Parameterized.class)

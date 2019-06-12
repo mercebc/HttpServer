@@ -55,7 +55,7 @@ public class GetWithBodyHandlerTest {
 
         @Test
         public void responseHasNoBody() {
-            assertThat(response.getBody(), is(""));
+            assertThat(response.getBody(), is(new byte[0]));
         }
 
     }

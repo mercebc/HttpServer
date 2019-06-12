@@ -1,6 +1,5 @@
 package Response;
 
-import Response.Response;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,19 +21,19 @@ public class ResponseConverterTest {
     @Test
     public void convertsResponseWithNoBodyIntoString(){
         response = new Response("HTTP/1.1 200 OK");
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\r\n"));
+        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\n\r\n".getBytes()));
     }
 
     @Test
     public void convertsResponseWithEmptyBodyIntoString(){
-        response = new Response("HTTP/1.1 200 OK", "");
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\r\n"));
+        response = new Response("HTTP/1.1 200 OK", "".getBytes());
+        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\n\r\n".getBytes()));
     }
 
     @Test
     public void convertsResponseWithBodyIntoString(){
-        response = new Response("HTTP/1.1 200 OK", "Hello world!");
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\n\r\nHello world!"));
+        response = new Response("HTTP/1.1 200 OK", "Hello world!".getBytes());
+        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\n\r\nHello world!".getBytes()));
     }
 
     @Test
@@ -42,8 +41,8 @@ public class ResponseConverterTest {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("first", "example");
         headers.put("second", "example2");
-        response = new Response("HTTP/1.1 200 OK", headers,"Hello world!");
-        assertThat(responseConverter.responseToString(response), is("HTTP/1.1 200 OK\nfirst: example\nsecond: example2\r\n\r\nHello world!"));
+        response = new Response("HTTP/1.1 200 OK", headers,"Hello world!".getBytes());
+        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\nfirst: example\r\nsecond: example2\r\n\r\nHello world!".getBytes()));
     }
 
     @Test
@@ -51,7 +50,7 @@ public class ResponseConverterTest {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("first", "example");
         headers.put("second", "example2");
-        assertThat(responseConverter.headersIntoString(headers), is("first: example\nsecond: example2"));
+        assertThat(responseConverter.headersIntoBytes(headers), is("first: example\r\nsecond: example2\r\n".getBytes()));
     }
 
 }

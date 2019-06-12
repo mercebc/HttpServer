@@ -15,9 +15,10 @@ public class IndexHandler extends ResponseHandler {
     }
 
     public Response get(Request request) throws IOException {
-        String htmlBody = publicFileManager.read("Index.html");
-        addHeader("Content-Type", publicFileManager.MIMEType("html"));
-        addHeader("Content-Length", String.valueOf(htmlBody.length()));
+        String filename = "Index.html";
+        byte[] htmlBody = publicFileManager.read(filename);
+        addHeader("Content-Type", publicFileManager.MIMEType(filename));
+        addHeader("Content-Length", String.valueOf(htmlBody.length));
         return new Response(StatusLineBuilder.create(200), getHeaders(), htmlBody);
 
     }

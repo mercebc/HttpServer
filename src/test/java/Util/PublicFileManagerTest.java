@@ -33,26 +33,32 @@ public class PublicFileManagerTest {
 
     @Test
     public void canReadAFile() throws IOException {
-        String expectedBody = "The first line\nThe second line\n";
+        byte[] expectedBody = "The first line\nThe second line\n".getBytes();
         assertThat(publicFileManager.read("Index.html"), is(expectedBody));
     }
 
     @Test
     public void createHtmlMIMEType() {
         String expectedMIME = "text/html; charset=utf-8";
-        assertThat(publicFileManager.MIMEType("html"), is(expectedMIME));
+        assertThat(publicFileManager.MIMEType("Index.html"), is(expectedMIME));
     }
 
     @Test
     public void createCssMIMEType() {
         String expectedMIME = "text/css; charset=utf-8";
-        assertThat(publicFileManager.MIMEType("css"), is(expectedMIME));
+        assertThat(publicFileManager.MIMEType("css/app-stylesheet.css"), is(expectedMIME));
     }
 
     @Test
     public void createImageMIMEType() {
-        String expectedMIME = "image/png; base64";
-        assertThat(publicFileManager.MIMEType("png"), is(expectedMIME));
+        String expectedMIME = "image/png";
+        assertThat(publicFileManager.MIMEType("/images/wellies.png"), is(expectedMIME));
+    }
+
+    @Test
+    public void getsFileExtension() {
+        String filename = "wellies.png";
+        assertThat(publicFileManager.getType(filename), is("png"));
     }
 
 }

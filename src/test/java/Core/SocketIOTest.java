@@ -40,13 +40,13 @@ public class SocketIOTest {
 
     @Test
     public void writesToSocket() throws IOException {
-        socketIO.printToSocket("Hello");
+        socketIO.printToSocket("Hello".getBytes());
         assertThat(out.toString().trim(), is("Hello"));
     }
 
     @Test
     public void hasMessageBeenSent() throws IOException {
-        socketIO.printToSocket("Hello");
+        socketIO.printToSocket("Hello".getBytes());
         assertThat(socketIO.isMessageSent(), is(true));
     }
 

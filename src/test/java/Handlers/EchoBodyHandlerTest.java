@@ -39,7 +39,7 @@ public class EchoBodyHandlerTest {
         public void responseWithAllowedMethodsHeader(){ assertThat(response.getHeaders().get("Allow"), is("POST")); }
 
         @Test
-        public void responseHasBody(){ assertThat(response.getBody(), is("Some test")); }
+        public void responseHasBody(){ assertThat(response.getBody(), is("Some test".getBytes())); }
     }
 
     @RunWith(value = Parameterized.class)

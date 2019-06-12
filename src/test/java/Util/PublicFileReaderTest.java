@@ -38,9 +38,21 @@ public class PublicFileReaderTest {
     }
 
     @Test
-    public void createMIMEType() {
+    public void createHtmlMIMEType() {
         String expectedMIME = "text/html; charset=utf-8";
         assertThat(publicFileReader.MIMEType("html"), is(expectedMIME));
+    }
+
+    @Test
+    public void createCssMIMEType() {
+        String expectedMIME = "text/css; charset=utf-8";
+        assertThat(publicFileReader.MIMEType("css"), is(expectedMIME));
+    }
+
+    @Test
+    public void createImageMIMEType() {
+        String expectedMIME = "image/png; base64";
+        assertThat(publicFileReader.MIMEType("png"), is(expectedMIME));
     }
 
 }

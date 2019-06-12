@@ -19,7 +19,9 @@ public class Main {
         router.config(publicFileReader);
         router.publicFiles(publicFileReader);
 
-        Server server = new Server(listener, router);
+        ServerStatus status = new ServerStatus(true);
+
+        Server server = new Server(listener, router, status);
         server.start();
 
     }

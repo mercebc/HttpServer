@@ -6,14 +6,16 @@ import java.lang.reflect.InvocationTargetException;
 public class Server {
     private Listener listener;
     private Router router;
+    private ServerStatus serverStatus;
 
-    public Server(Listener listener, Router router){
+    public Server(Listener listener, Router router, ServerStatus serverStatus){
         this.listener = listener;
         this.router = router;
+        this.serverStatus = serverStatus;
     }
 
     public void start() throws IOException, InvocationTargetException, IllegalAccessException {
-        while (true) {
+        while (serverStatus.isOn()) {
             SocketIO socketIO = listener.connect();
             Response response = router.route(getRequest(socketIO));
             sendResponse(socketIO, response);

@@ -2,11 +2,11 @@ package Handlers.PublicFileHandlers;
 
 import Request.Request;
 import Response.Response;
-import Response.StatusLineBuilder;
 import Handlers.ResponseHandler;
 import Util.PublicFileManager;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class PublicFileHandler extends ResponseHandler {
     PublicFileManager publicFileManager;
@@ -17,8 +17,10 @@ public class PublicFileHandler extends ResponseHandler {
 
     public Response get(Request request) throws IOException {
         byte[] body = publicFileManager.read(request.getURI());
-        addHeader("Content-Type", publicFileManager.MIMEType(request.getURI()));
-        addHeader("Content-Length", String.valueOf(body.length));
-        return new Response(StatusLineBuilder.create(200), getHeaders(), body);
+        Map<String, String> headers = allowedMethods();
+        headers.put("Content-Type", publicFileManager.MIMEType(request.getURI()));
+
+        return Response.ok().withHeaders(headers).withBody(body);
+
     }
 }

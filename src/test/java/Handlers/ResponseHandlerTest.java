@@ -14,11 +14,11 @@ public class ResponseHandlerTest extends ResponseHandler{
         responseHandler = new ResponseHandlerTest();
     }
 
-    @Test
-    public void canAddAHeader(){
-        responseHandler.addHeader("header", "valueOfTheHeader");
-        assertThat(responseHandler.getHeaders().get("header"), is("valueOfTheHeader"));
-    }
+    //@Test
+    //public void canAddAHeader(){
+      //  responseHandler.addHeader("header", "valueOfTheHeader");
+        //assertThat(responseHandler.getHeaders().get("header"), is("valueOfTheHeader"));
+    //}
 
 
 }

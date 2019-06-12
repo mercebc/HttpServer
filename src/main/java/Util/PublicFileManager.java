@@ -26,8 +26,8 @@ public class PublicFileManager {
         return files;
     }
 
-    private void addFile(String resource){
-        files.put(resource, new PublicFileHandler(this));
+    private void addFile(String filePath){
+        files.put(filePath, new PublicFileHandler(this));
     }
 
     public void config(){

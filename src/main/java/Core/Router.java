@@ -3,10 +3,8 @@ package Core;
 import Handlers.*;
 import Request.Request;
 import Response.Response;
-import Response.StatusLineBuilder;
 import Util.PublicFileManager;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,16 +25,17 @@ public class Router {
         return resources;
     }
 
-    public Response route(Request request) throws InvocationTargetException, IllegalAccessException {
-
+    public Response route(Request request) {
         String URI = request.getURI();
+        ResponseHandler resourceHandler = resources.get(URI);
+        ResponseHandler fileHandler = publicFileManager.getFiles().get(URI);
 
-        if (resources.get(URI) != null) {
-            return resources.get(URI).respondToRequest(request);
-        }else if (publicFileManager.getFiles().get(URI) != null) {
-            return publicFileManager.getFiles().get(URI).respondToRequest(request);
+        if (resourceHandler != null) {
+            return resourceHandler.respondToRequest(request);
+        }else if (fileHandler != null) {
+            return fileHandler.respondToRequest(request);
         }else{
-            return new Response(StatusLineBuilder.create(404));
+            return Response.notFound();
         }
     }
 

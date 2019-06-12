@@ -2,6 +2,7 @@ package Core;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Listener {
 
@@ -12,7 +13,8 @@ public class Listener {
     }
 
     public SocketIO connect() throws IOException {
-        return new SocketIO(serverSocket.accept());
+        Socket socket = serverSocket.accept();
+        return new SocketIO(socket);
     }
 
 }

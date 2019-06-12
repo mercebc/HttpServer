@@ -3,11 +3,10 @@ package Core;
 import Util.PublicFileManager;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InvocationTargetException, IllegalAccessException {
+    public static void main(String[] args) throws IOException {
 
         int portNumber = Integer.parseInt(System.getenv("PORT"));
         String path = System.getProperty("path") + "/";

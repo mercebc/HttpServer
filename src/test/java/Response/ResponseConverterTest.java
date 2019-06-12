@@ -20,20 +20,20 @@ public class ResponseConverterTest {
 
     @Test
     public void convertsResponseWithNoBodyIntoString(){
-        response = new Response("HTTP/1.1 200 OK");
+        response = Response.ok();
         assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\n\r\n".getBytes()));
     }
 
     @Test
     public void convertsResponseWithEmptyBodyIntoString(){
-        response = new Response("HTTP/1.1 200 OK", "".getBytes());
-        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\n\r\n".getBytes()));
+        response = Response.ok().withBody("".getBytes());
+        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n".getBytes()));
     }
 
     @Test
     public void convertsResponseWithBodyIntoString(){
-        response = new Response("HTTP/1.1 200 OK", "Hello world!".getBytes());
-        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\n\r\nHello world!".getBytes()));
+        response = Response.ok().withBody("Hello world!".getBytes());
+        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\nContent-Length: 12\r\n\r\nHello world!".getBytes()));
     }
 
     @Test
@@ -41,8 +41,8 @@ public class ResponseConverterTest {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("first", "example");
         headers.put("second", "example2");
-        response = new Response("HTTP/1.1 200 OK", headers,"Hello world!".getBytes());
-        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\nfirst: example\r\nsecond: example2\r\n\r\nHello world!".getBytes()));
+        response = Response.ok().withHeaders(headers).withBody("Hello world!".getBytes());
+        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\nContent-Length: 12\r\nfirst: example\r\nsecond: example2\r\n\r\nHello world!".getBytes()));
     }
 
     @Test

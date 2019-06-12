@@ -2,57 +2,52 @@ package Handlers;
 
 import Request.Request;
 import Response.Response;
-import Response.StatusLineBuilder;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class ResponseHandler {
-    private HashMap<String, String> headers = new HashMap<>();
+    private HashMap<String, String> allowedMethods = new HashMap<>();
+    private Set<String> httpMethods = new HashSet<>(Arrays.asList("GET", "POST", "HEAD", "OPTIONS", "PUT"));
 
-    public HashMap<String, String> getHeaders() {
-        return headers;
+    public HashMap<String, String> allowedMethods() {
+            return allowedMethods;
     }
 
-    public void addHeader(String name, String value){
-        this.headers.put(name, value);
-    }
+    public Response respondToRequest(Request request) {
+        addMethodsAllowedIntoHeader(this.getClass());
 
-    public Response respondToRequest(Request request) throws InvocationTargetException, IllegalAccessException {
-        List<Method> methods = filterHTTPMethods(this.getClass());
-
-        for (Method method : methods) {
-            if(request.getMethod().equals(method.getName().toUpperCase())){
-                addAllowedMethodsHeader(this.getClass());
-                return (Response) method.invoke(this, request);
+        for (Method method : handlerHttpMethods(this.getClass())) {
+            if(isMethodAllowed(request, method)){
+                return new Invoke(this, method).toRespondTo(request);
             }
         }
-        return new Response(StatusLineBuilder.create(405), getHeaders());
+        return Response.methodNotAllowed().withHeaders(allowedMethods);
     }
 
-    public void addAllowedMethodsHeader(Class<?> currentClass){
-        List<Method> classHttpMethods = filterHTTPMethods(currentClass);
-        String methodsAllowed = "";
+    private boolean isMethodAllowed(Request request, Method method) {
+        return request.getMethod().equals(method.getName().toUpperCase());
+    }
 
-        for (Method method : classHttpMethods)
-        {
-            methodsAllowed += method.getName().toUpperCase() + ",";
+    private void addMethodsAllowedIntoHeader(Class<?> aClass){
+        StringBuilder methodsAllowed = new StringBuilder();
+        for (Method method : handlerHttpMethods(aClass)) {
+            methodsAllowed.append(method.getName().toUpperCase()).append(",");
         }
-        methodsAllowed = methodsAllowed.substring(0, methodsAllowed.length() - 1); //to not get the last comma and space
-        addHeader("Allow", methodsAllowed);
+        methodsAllowed = new StringBuilder(methodsAllowed.substring(0, methodsAllowed.length() - 1));
+        this.allowedMethods.put("Allow", methodsAllowed.toString());
     }
 
-    private List<Method> filterHTTPMethods(Class<?> currentClass){
-        Set<String> httpMethods = new HashSet<>(Arrays.asList("GET", "POST", "HEAD", "OPTIONS", "PUT"));
-        List<Method> classMethods = Arrays.asList(currentClass.getDeclaredMethods());
+    private List<Method> handlerHttpMethods(Class<?> currentClass){
+        List<Method> handlerMethods = Arrays.asList(currentClass.getDeclaredMethods());
 
-        List<Method> classHttpMethods =
-                classMethods.stream()
+        List<Method> handlerHttpMethods =
+                handlerMethods.stream()
                         .filter(method -> httpMethods.contains(method.getName().toUpperCase()))
                         .collect(Collectors.toList());
 
-        return classHttpMethods;
+        return handlerHttpMethods;
     }
+
 }

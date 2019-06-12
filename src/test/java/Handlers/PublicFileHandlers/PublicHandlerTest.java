@@ -61,7 +61,7 @@ public class PublicHandlerTest {
 
     @Test
     public void responseWithContentTypeHeaders(){
-        assertThat(response.getHeaders().get("Content-Type"), is("image/png; base64"));
+        assertThat(response.getHeaders().get("Content-Type"), is("image/png"));
     }
 
 }

@@ -51,7 +51,7 @@ public class PublicFileManagerTest {
 
     @Test
     public void createImageMIMEType() {
-        String expectedMIME = "image/png; base64";
+        String expectedMIME = "image/png";
         assertThat(publicFileManager.MIMEType("/images/wellies.png"), is(expectedMIME));
     }
 

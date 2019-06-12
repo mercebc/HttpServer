@@ -42,7 +42,7 @@ public class ResponseConverterTest {
         headers.put("first", "example");
         headers.put("second", "example2");
         response = new Response("HTTP/1.1 200 OK", headers,"Hello world!".getBytes());
-        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\nfirst: example\nsecond: example2\r\nHello world!".getBytes()));
+        assertThat(responseConverter.responseToBytes(response), is("HTTP/1.1 200 OK\r\nfirst: example\r\nsecond: example2\r\n\r\nHello world!".getBytes()));
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ResponseConverterTest {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("first", "example");
         headers.put("second", "example2");
-        assertThat(responseConverter.headersIntoBytes(headers), is("first: example\nsecond: example2".getBytes()));
+        assertThat(responseConverter.headersIntoBytes(headers), is("first: example\r\nsecond: example2\r\n".getBytes()));
     }
 
 }

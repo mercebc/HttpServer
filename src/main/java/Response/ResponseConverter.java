@@ -18,13 +18,12 @@ public class ResponseConverter {
 
 
        byte[] allByteArray = new byte[statusLine.length + CRLF.length + headers.length
-                + CRLF.length + CRLF.length + messageBody.length];
+                + CRLF.length + messageBody.length];
 
        ByteBuffer buff = ByteBuffer.wrap(allByteArray);
        buff.put(statusLine);
        buff.put(CRLF);
        buff.put(headers);
-       buff.put(CRLF);
        buff.put(CRLF);
        buff.put(messageBody);
 

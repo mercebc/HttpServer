@@ -1,9 +1,9 @@
 package Handlers;
 
 
-import Core.Request;
-import Core.Response;
-import Core.StatusLineBuilder;
+import Request.Request;
+import Response.Response;
+import Response.StatusLineBuilder;
 
 public class RedirectHandler extends ResponseHandler {
 

@@ -1,5 +1,6 @@
-package Core;
+package Request;
 
+import Request.Request;
 import org.junit.Before;
 import org.junit.Test;
 

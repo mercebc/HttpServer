@@ -1,6 +1,6 @@
-package Core;
+package Response;
 
-import Core.Response;
+import Response.Response;
 import org.junit.Before;
 import org.junit.Test;
 

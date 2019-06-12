@@ -1,22 +1,23 @@
-package Handlers;
-
-import java.io.IOException;
+package Handlers.PublicFileHandlers;
 
 import Request.Request;
 import Response.Response;
 import Response.StatusLineBuilder;
+import Handlers.ResponseHandler;
 import Util.PublicFileManager;
 
-public class IndexHandler extends ResponseHandler {
+import java.io.IOException;
+
+public class CssHandler extends ResponseHandler {
     PublicFileManager publicFileManager;
 
-    public IndexHandler(PublicFileManager publicFileManager) {
+    public CssHandler(PublicFileManager publicFileManager) {
         this.publicFileManager = publicFileManager;
     }
 
     public Response get(Request request) throws IOException {
-        String htmlBody = publicFileManager.read("Index.html");
-        addHeader("Content-Type", publicFileManager.MIMEType("html"));
+        String htmlBody = publicFileManager.read("css/app-stylesheet.css");
+        addHeader("Content-Type", publicFileManager.MIMEType("css"));
         addHeader("Content-Length", String.valueOf(htmlBody.length()));
         return new Response(StatusLineBuilder.create(200), getHeaders(), htmlBody);
 

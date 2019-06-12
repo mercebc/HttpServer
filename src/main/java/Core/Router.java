@@ -1,13 +1,21 @@
 package Core;
 
 import Handlers.*;
-import Util.PublicFileReader;
+import Request.Request;
+import Response.Response;
+import Response.StatusLineBuilder;
+import Util.PublicFileManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Router {
+    private PublicFileManager publicFileManager;
+
+    public Router(PublicFileManager publicFileManager){
+        this.publicFileManager = publicFileManager;
+    }
 
     private Map<String, ResponseHandler> resources = new HashMap<>();
 
@@ -25,21 +33,21 @@ public class Router {
 
         if (resources.get(URI) != null) {
             return resources.get(URI).respondToRequest(request);
+        }else if (publicFileManager.getFiles().get(URI) != null) {
+            return publicFileManager.getFiles().get(URI).respondToRequest(request);
         }else{
             return new Response(StatusLineBuilder.create(404));
         }
-
     }
 
-    public void config(PublicFileReader publicFileReader){
-        addResource("/", new IndexHandler(publicFileReader));
+    public void config(){
+        addResource("/", new IndexHandler(publicFileManager));
         addResource("/simple_get", new SimpleGetHandler());
         addResource("/redirect", new RedirectHandler());
         addResource("/get_with_body", new GetWithBodyHandler());
         addResource("/method_options", new MethodOptionsHandler());
         addResource("/method_options2", new MethodOptions2Handler());
         addResource("/echo_body", new EchoBodyHandler());
-
     }
 }
 

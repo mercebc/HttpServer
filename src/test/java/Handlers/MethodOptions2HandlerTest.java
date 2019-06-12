@@ -1,7 +1,7 @@
 package Handlers;
 
-import Core.Request;
-import Core.Response;
+import Request.Request;
+import Response.Response;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

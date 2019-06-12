@@ -46,7 +46,7 @@ public class IndexHandlerTest {
 
     @Test
     public void responseHasHTMLinBody(){
-        String bodyExpected = "The first line\nThe second line\n";
+         byte[] bodyExpected = "The first line\nThe second line\n".getBytes();
         assertThat(response.getBody(), is(bodyExpected));
     }
 

@@ -4,10 +4,10 @@ import java.util.HashMap;
 
 public class Response {
     private HashMap<String, String> headers = new HashMap<>();
-    private String body = "";
+    private byte[] body = new byte[0];
     private String statusLine;
 
-    public Response(String statusLine, String body) {
+    public Response(String statusLine, byte[] body) {
         this.statusLine = statusLine;
         this.body = body;
     }
@@ -17,7 +17,7 @@ public class Response {
         this.headers = headers;
     }
 
-    public Response(String statusLine, HashMap<String, String> headers, String body){
+    public Response(String statusLine, HashMap<String, String> headers, byte[] body){
         this.statusLine = statusLine;
         this.headers = headers;
         this.body = body;
@@ -35,7 +35,7 @@ public class Response {
         return this.headers;
     }
 
-    public String getBody() {
+    public byte[] getBody() {
         return body;
     }
 }

@@ -32,10 +32,11 @@ public class SocketIO {
     }
 
 
-    public void printToSocket(String message) throws IOException {
-        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-        out.print(message);
-        messageSent = !out.checkError();
+    public void printToSocket(byte[] message) throws IOException {
+        BufferedOutputStream out = new BufferedOutputStream(socket.getOutputStream());
+        out.write(message);
+        messageSent = true;
+        out.flush();
         closeConnection();
     }
 

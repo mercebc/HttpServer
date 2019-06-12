@@ -52,7 +52,7 @@ public class SimpleGetHandlerTest {
 
         @Test
         public void responseHasEmptyBody(){
-            assertThat(response.getBody(), is(""));
+            assertThat(response.getBody(), is(new byte[0]));
         }
 
     }

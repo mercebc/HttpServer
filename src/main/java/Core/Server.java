@@ -28,7 +28,7 @@ public class Server {
     }
 
     private void sendResponse(SocketIO socketIO, Response response) throws IOException {
-        String responseString = ResponseConverter.responseToString(response);
+        byte[] responseString = ResponseConverter.responseToBytes(response);
         socketIO.printToSocket(responseString);
     }
 

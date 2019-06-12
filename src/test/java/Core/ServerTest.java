@@ -41,7 +41,7 @@ public class ServerTest {
 
         server.start();
 
-        assertThat(socket.getOutputStream().toString().trim(), is("HTTP/1.1 200 OK\nAllow: GET,HEAD"));
+        assertThat(socket.getOutputStream().toString().trim(), is("HTTP/1.1 200 OK\r\nAllow: GET,HEAD"));
     }
 
 }

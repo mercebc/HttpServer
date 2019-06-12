@@ -17,6 +17,7 @@ public class Main {
         Router router = new Router();
         PublicFileReader publicFileReader = new PublicFileReader(path);
         router.config(publicFileReader);
+        router.publicFiles(publicFileReader);
 
         Server server = new Server(listener, router);
         server.start();

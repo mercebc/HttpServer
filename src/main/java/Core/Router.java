@@ -1,6 +1,8 @@
 package Core;
 
 import Handlers.*;
+import Handlers.PublicFileHandlers.CssHandler;
+import Handlers.PublicFileHandlers.ImageHandler;
 import Util.PublicFileReader;
 
 import java.lang.reflect.InvocationTargetException;
@@ -31,6 +33,11 @@ public class Router {
 
     }
 
+    public void publicFiles(PublicFileReader publicFileReader){
+        addResource("/images/wellies.png", new ImageHandler(publicFileReader));
+        addResource("/css/app-stylesheet.css", new CssHandler(publicFileReader));
+    }
+
     public void config(PublicFileReader publicFileReader){
         addResource("/", new IndexHandler(publicFileReader));
         addResource("/simple_get", new SimpleGetHandler());
@@ -39,7 +46,6 @@ public class Router {
         addResource("/method_options", new MethodOptionsHandler());
         addResource("/method_options2", new MethodOptions2Handler());
         addResource("/echo_body", new EchoBodyHandler());
-
     }
 }
 

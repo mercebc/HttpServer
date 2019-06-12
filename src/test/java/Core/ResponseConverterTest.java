@@ -1,6 +1,5 @@
 package Core;
 
-import Core.Response;
 import org.junit.Before;
 import org.junit.Test;
 

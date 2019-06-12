@@ -28,7 +28,6 @@ public class SocketIO {
             request.write((byte) result);
         } while (inputStream.available() > 0);
 
-        System.out.println(request.toString());
         return request.toString();
     }
 

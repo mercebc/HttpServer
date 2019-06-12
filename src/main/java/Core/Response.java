@@ -7,10 +7,6 @@ public class Response {
     private String body = "";
     private String statusLine;
 
-    public Response(String statusLine){
-        this.statusLine = statusLine;
-    }
-
     public Response(String statusLine, String body) {
         this.statusLine = statusLine;
         this.body = body;
@@ -25,6 +21,10 @@ public class Response {
         this.statusLine = statusLine;
         this.headers = headers;
         this.body = body;
+    }
+
+    public Response(String statusLine) {
+        this.statusLine = statusLine;
     }
 
     public String getStatusLine() {

@@ -40,7 +40,7 @@ public class PublicFileReaderTest {
     @Test
     public void createMIMEType() {
         String expectedMIME = "text/html; charset=utf-8";
-        assertThat(publicFileReader.MIMEType("Index.html"), is(expectedMIME));
+        assertThat(publicFileReader.MIMEType("html"), is(expectedMIME));
     }
 
 }

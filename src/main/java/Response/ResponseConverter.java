@@ -1,8 +1,8 @@
 package Response;
 
 import java.nio.ByteBuffer;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class ResponseConverter {
     private static final byte[] CRLF = "\r\n".getBytes();
@@ -38,13 +38,13 @@ public class ResponseConverter {
        return response.getBody().length != 0;
    }
 
-   public static byte[] headersIntoBytes(HashMap<String, String> headers){
+   public static byte[] headersIntoBytes(Map<String, String> headers){
        String crlf = "\r\n";
        String result = "";
 
        Iterator it = headers.entrySet().iterator();
        while (it.hasNext()) {
-           HashMap.Entry resource = (HashMap.Entry) it.next();
+           Map.Entry resource = (Map.Entry) it.next();
            result += resource.getKey() + ": " + resource.getValue() + crlf;
            it.remove();
        }

@@ -28,4 +28,9 @@ public class StatusLineBuilderTest {
         assertThat(StatusLineBuilder.create(405), is("HTTP/1.1 405 Method Not Allowed"));
     }
 
+    @Test
+    public void statusLineServerError(){
+        assertThat(StatusLineBuilder.create(500), is("HTTP/1.1 500 Internal Server Error"));
+    }
+
 }

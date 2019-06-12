@@ -17,76 +17,54 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@RunWith(Enclosed.class)
 public class GetWithBodyHandlerTest {
+    private GetWithBodyHandler getWithBodyHandler;
+    private Response response;
+    private String method;
 
-    @RunWith(value = Parameterized.class)
-    public static class HttpAllowedMethods {
-        private GetWithBodyHandler getWithBodyHandler;
-        private Response response;
-        private String method;
 
-        @Parameterized.Parameters
-        public static Collection data() {
-            Object[][] data = new Object[][]{{"HEAD"}, {"OPTIONS"}};
-            return Arrays.asList(data);
-        }
+    @Before
+    public void setUp() {
+        getWithBodyHandler = new GetWithBodyHandler();
+    }
 
-        public HttpAllowedMethods(String method) {
-            this.method = method;
-        }
+    @Test
+    public void responseStatusLineOK() {
+        String[] methods = {"HEAD", "OPTIONS"};
 
-        @Before
-        public void setUp() throws InvocationTargetException, IllegalAccessException {
-            getWithBodyHandler = new GetWithBodyHandler();
-            response = getWithBodyHandler.respondToRequest(new Request(method, "/get_with_body", "HTTP/1.1", new HashMap<>(), "Some test"));
-        }
-
-        @Test
-        public void responseStatusLineOK() {
+        for (int i = 0; i < methods.length; i++) {
+            response = getWithBodyHandler.respondToRequest(new Request(methods[i], "/get_with_body", "HTTP/1.1", new HashMap<>(), "Some test"));
             assertThat(response.getStatusLine(), is("HTTP/1.1 200 OK"));
         }
+    }
 
-        @Test
-        public void getAllowedMethodsHeader() {
-            assertThat(response.getHeaders().get("Allow"), containsString("OPTIONS"));
-            assertThat(response.getHeaders().get("Allow"), containsString("HEAD"));
-        }
+    @Test
+    public void getAllowedMethodsHeader() {
+        response = getWithBodyHandler.respondToRequest(new Request("OPTIONS", "/get_with_body", "HTTP/1.1", new HashMap<>(), "Some test"));
 
-        @Test
-        public void responseHasNoBody() {
+        assertThat(response.getHeaders().get("Allow"), containsString("OPTIONS"));
+        assertThat(response.getHeaders().get("Allow"), containsString("HEAD"));
+    }
+
+    @Test
+    public void responseHasNoBody() {
+        String[] methods = {"HEAD", "OPTIONS"};
+
+        for (int i = 0; i < methods.length; i++) {
+            response = getWithBodyHandler.respondToRequest(new Request(methods[i], "/get_with_body", "HTTP/1.1", new HashMap<>(), "Some test"));
             assertThat(response.getBody(), is(new byte[0]));
         }
-
     }
 
-    @RunWith(value = Parameterized.class)
-    public static class HttpNotAllowedMethods {
-        private GetWithBodyHandler getWithBodyHandler;
-        private Response response;
-        private String method;
+    @Test
+    public void responseStatusLineNotAllowed() {
+        String[] methods = {"GET", "PUT", "POST"};
 
-        @Parameterized.Parameters
-        public static Collection data() {
-            Object[][] data = new Object[][] { {"GET"}, {"PUT"}, {"POST"} };
-            return Arrays.asList(data);
-        }
-
-        public HttpNotAllowedMethods(String method) {
-            this.method = method;
-        }
-
-        @Before
-        public void setUp() throws InvocationTargetException, IllegalAccessException {
-            getWithBodyHandler = new GetWithBodyHandler();
-            response = getWithBodyHandler.respondToRequest(new Request(method, "/get_with_body", "HTTP/1.1",  new HashMap<>(), "Some test"));
-        }
-
-        @Test
-        public void responseStatusLineNotAllowed() {
+        for (int i = 0; i < methods.length; i++) {
+            response = getWithBodyHandler.respondToRequest(new Request(methods[i], "/get_with_body", "HTTP/1.1", new HashMap<>(), "Some test"));
             assertThat(response.getStatusLine(), is("HTTP/1.1 405 Method Not Allowed"));
         }
-
     }
+
 
 }

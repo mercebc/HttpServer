@@ -6,7 +6,6 @@ import Response.Response;
 import Response.ResponseConverter;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 public class Server {
     private Listener listener;
@@ -19,7 +18,7 @@ public class Server {
         this.serverStatus = serverStatus;
     }
 
-    public void start() throws IOException, InvocationTargetException, IllegalAccessException {
+    public void start() throws IOException {
         while (serverStatus.isOn()) {
             SocketIO socketIO = listener.connect();
             Response response = router.route(getRequest(socketIO));

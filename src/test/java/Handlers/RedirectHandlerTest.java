@@ -4,70 +4,52 @@ import Request.Request;
 import Response.Response;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-@RunWith(Enclosed.class)
 public class RedirectHandlerTest {
+    private RedirectHandler redirectHandler;
+    private Response response;
 
-    public static class GetMethod {
-        private RedirectHandler redirectHandler;
-        private Response response;
-
-        @Before
-        public void setUp() throws InvocationTargetException, IllegalAccessException {
-            redirectHandler = new RedirectHandler();
-            response = redirectHandler.respondToRequest(new Request("GET", "/redirect", "HTTP/1.1",  new HashMap<>(), ""));
-        }
-
-        @Test
-        public void responseRedirect() {
-            assertThat(response.getStatusLine(), is("HTTP/1.1 301 Moved Permanently"));
-        }
-
-        @Test
-        public void responseWithLocationHeaders(){ assertThat(response.getHeaders().get("Location"), is("http://0.0.0.0:5000/simple_get")); }
-
-        @Test
-        public void responseHasNoBody(){ assertThat(response.getBody(), is(new byte[0])); }
+    @Before
+    public void setUp() {
+        redirectHandler = new RedirectHandler();
     }
 
-    @RunWith(value = Parameterized.class)
-    public static class HttpNotAllowedMethods {
-        private RedirectHandler redirectHandler;
-        private Response response;
-        private String method;
+    @Test
+    public void responseRedirect() {
+        response = redirectHandler.respondToRequest(new Request("GET", "/redirect", "HTTP/1.1", new HashMap<>(), ""));
 
-        @Parameterized.Parameters
-        public static Collection data() {
-            Object[][] data = new Object[][] { {"POST"}, {"HEAD"}, {"PUT"}, {"OPTIONS"} };
-            return Arrays.asList(data);
-        }
+        assertThat(response.getStatusLine(), is("HTTP/1.1 301 Moved Permanently"));
+    }
 
-        public HttpNotAllowedMethods(String method) {
-            this.method = method;
-        }
 
-        @Before
-        public void setUp() throws InvocationTargetException, IllegalAccessException {
-            redirectHandler = new RedirectHandler();
-            response = redirectHandler.respondToRequest(new Request(method, "/redirect", "HTTP/1.1",  new HashMap<>(), ""));
-        }
+    @Test
+    public void responseWithLocationHeaders(){
+        response = redirectHandler.respondToRequest(new Request("GET", "/redirect", "HTTP/1.1", new HashMap<>(), ""));
 
-        @Test
-        public void responseStatusLineNotAllowed() {
+        assertThat(response.getHeaders().get("Location"), is("http://0.0.0.0:5000/simple_get"));
+    }
+
+    @Test
+    public void responseHasNoBody(){
+        response = redirectHandler.respondToRequest(new Request("GET", "/redirect", "HTTP/1.1", new HashMap<>(), ""));
+
+        assertThat(response.getBody(), is(new byte[0]));
+    }
+
+
+    @Test
+    public void responseStatusLineNotAllowed() {
+        String[] methods = {"HEAD", "OPTIONS", "PUT", "POST"};
+
+        for (int i = 0; i < methods.length; i++) {
+            response = redirectHandler.respondToRequest(new Request(methods[i], "/redirect", "HTTP/1.1", new HashMap<>(), "Some test"));
             assertThat(response.getStatusLine(), is("HTTP/1.1 405 Method Not Allowed"));
         }
-
     }
 
 }

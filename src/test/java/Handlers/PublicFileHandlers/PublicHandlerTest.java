@@ -28,7 +28,7 @@ public class PublicHandlerTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Before
-    public void SetUp() throws InvocationTargetException, IllegalAccessException, IOException {
+    public void SetUp() throws IOException {
 
         File imageFolder = folder.newFolder("images");
         File image = new File(imageFolder.getAbsolutePath() + "/wellies.png");
